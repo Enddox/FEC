@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Academico - I-2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: #050505;
+      color: #00ff41;
+      min-height: 100vh;
+    }
+    .crt {
+      position: relative;
+      border-radius: 18px;
+      padding: 3px;
+      background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+      box-shadow: 0 0 60px rgba(0,255,65,0.07), 0 0 2px rgba(0,255,65,0.3), inset 0 0 80px rgba(0,0,0,0.8);
+    }
+    .crt::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+      pointer-events: none;
+      z-index: 50;
+    }
+    .crt::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: radial-gradient(ellipse at 30% 20%, rgba(0,255,65,0.03) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 51;
+    }
+    .screen {
+      background: #0a0a0a;
+      border-radius: 15px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .screen::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 15px;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%);
+      pointer-events: none;
+      z-index: 40;
+    }
+    @keyframes flicker { 0%,100%{opacity:1}92%{opacity:1}93%{opacity:.85}94%{opacity:1}96%{opacity:.9}97%{opacity:1} }
+    .screen { animation: flicker 8s infinite; }
+    .glow { text-shadow: 0 0 6px rgba(0,255,65,0.5), 0 0 20px rgba(0,255,65,0.15); }
+    .glow-dim { text-shadow: 0 0 4px rgba(0,255,65,0.3); }
+    .glow-box { box-shadow: 0 0 8px rgba(0,255,65,0.08), inset 0 0 8px rgba(0,255,65,0.03); }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid rgba(0,255,65,0.1);
+      border-radius: 6px;
+      text-decoration: none;
+      color: #00ff41;
+      transition: all 0.15s;
+      background: rgba(0,255,65,0.02);
+    }
+    .nav-item:hover {
+      background: rgba(0,255,65,0.08);
+      border-color: rgba(0,255,65,0.35);
+      box-shadow: 0 0 12px rgba(0,255,65,0.1);
+    }
+    .nav-item.disabled {
+      opacity: 0.35;
+      cursor: default;
+      pointer-events: none;
+    }
+    .nav-item .arrow {
+      margin-left: auto;
+      opacity: 0.3;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .nav-item:hover .arrow {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:0} }
+    .cursor-blink::after {
+      content: '█';
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
+      font-size: 0.8em;
+    }
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(0,255,65,0.3);
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(0,255,65,0.06);
+      margin-bottom: 8px;
+    }
+    .news-item {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0,255,65,0.05);
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-tag {
+      display: inline-block;
+      font-size: 7px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 1px 5px;
+      border-radius: 3px;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8 flex items-start justify-center">
+  <div class="crt w-full max-w-4xl">
+    <div class="screen">
+
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">sys@universidad</span>
+        <span class="text-[10px]" style="color:rgba(0,255,65,0.2)">~</span>
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">main_menu</span>
+      </div>
+
+      <p class="text-xs mb-4 glow-dim" style="color:rgba(0,255,65,0.35)">$ ./inicio.sh</p>
+
+      <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-1">SISTEMA ACADEMICO</h1>
+      <p class="text-[11px] mb-5 glow-dim" style="color:rgba(0,255,65,0.4)">Lic. Computacion &mdash; I-2026 &mdash; Seccion 2 &mdash; 1er. Semestre</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_220px] gap-5">
+
+        <div>
+          <div class="section-label glow-dim">[ Navegacion Principal ]</div>
+          <nav class="flex flex-col gap-2 mb-5">
+            <a href="horario.html" class="nav-item glow-box">
+              <span class="text-sm font-semibold glow">Horario</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">horario.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+            <a href="grupos.html" class="nav-item glow-box">
+              <span class="text-sm font-semibold glow">Grupos</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">grupos.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+          </nav>
+
+          <div class="section-label glow-dim">[ Materias ]</div>
+          <nav class="flex flex-col gap-2 mb-4">
+            <a href="calculoi.html" class="nav-item glow-box">
+              <span class="text-sm font-semibold glow">Calculo I</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">calculoi.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+            <a href="algoritmos.html" class="nav-item disabled glow-box">
+              <span class="text-sm font-semibold">Algoritmos y Programacion I</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">algoritmos.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+            <a href="logicamatematica.html" class="nav-item disabled glow-box">
+              <span class="text-sm font-semibold">Logica Matematica</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">logicamatematica.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+            <a href="comunicacion.html" class="nav-item disabled glow-box">
+              <span class="text-sm font-semibold">Sub-Area Comunicacion</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">comunicacion.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+            <a href="orientacion.html" class="nav-item disabled glow-box">
+              <span class="text-sm font-semibold">Orientacion I</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">orientacion.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+            <a href="ppi.html" class="nav-item disabled glow-box">
+              <span class="text-sm font-semibold">PPI</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">ppi.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+          </nav>
+
+          <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
+        </div>
+
+        <aside>
+          <div class="section-label glow-dim">[ Ultimas Noticias ]</div>
+          <div class="border border-[rgba(0,255,65,0.08)] rounded-md p-3 glow-box" style="background:rgba(0,255,65,0.01)">
+            <div class="news-item">
+              <span class="news-tag" style="background:rgba(0,255,65,0.1);color:rgba(0,255,65,0.5)">nuevo</span>
+              <p class="text-[10px] glow-dim" style="color:rgba(0,255,65,0.6)">Pagina de Calculo I disponible con datos de Classroom y Zoom</p>
+              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,0.2)">2025-06-25</p>
+            </div>
+            <div class="news-item">
+              <span class="news-tag" style="background:rgba(245,158,11,0.1);color:rgba(245,158,11,0.5)">info</span>
+              <p class="text-[10px] glow-dim" style="color:rgba(0,255,65,0.6)">Demas paginas de materias en construccion</p>
+              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,0.2)">2025-06-25</p>
+            </div>
+            <div class="news-item">
+              <span class="news-tag" style="background:rgba(239,68,68,0.1);color:rgba(239,68,68,0.5)">solap</span>
+              <p class="text-[10px] glow-dim" style="color:rgba(0,255,65,0.6)">Solapamiento detectado: Miercoles 9:00-9:30 (Algoritmos + Logica)</p>
+              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,0.2)">2025-06-25</p>
+            </div>
+            <div class="news-item">
+              <span class="news-tag" style="background:rgba(0,255,65,0.1);color:rgba(0,255,65,0.5)">sys</span>
+              <p class="text-[10px] glow-dim" style="color:rgba(0,255,65,0.6)">Sistema academico operativo. Seccion 2 cargada.</p>
+              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,0.2)">2025-06-25</p>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

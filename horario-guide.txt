@@ -54,18 +54,33 @@ Guía para editar el horario en horario.html
     - Abre la página en el navegador para confirmar que el bloque aparece en la columna del día correcto.
     - Si el horario sigue vacío, revisa errores de sintaxis en el arreglo `COURSES`.
 
-11. Commit y push:
+11. Vínculos de materias desde el horario:
+    - El horario puede enlazar cada materia a su página correspondiente.
+    - Para eso usa el campo `ck` de cada materia y añade la ruta en el objeto `COURSE_LINKS` dentro de `horario.html`.
+    - Ejemplo:
+      const COURSE_LINKS = {
+        calc: 'calculoi.html',
+        comu: 'comunicacion.html',
+        logi: 'logicamatematica.html'
+      };
+    - Si agregas una nueva materia con `ck: 'algo'`, también debes agregar la entrada `algo: 'algoritmos.html'`.
+
+12. Commit y push:
     - Después de hacer cambios en `horario.html`, ejecuta:
       git add horario.html
       git commit -m "Actualiza horario: [descripción de cambios]"
       git push
 
-12. Ejemplo completo de `COURSES`:
+13. Ejemplo completo de `COURSES`:
    const COURSES = [
      { d: 0, sh: 14, sm: 45, eh: 16, em: 45, n: 'Calculo I', tp: 'online', ck: 'calc' },
      { d: 0, sh: 18, sm: 0,  eh: 20, em: 0,  n: 'Subarea de Comunicacion', tp: 'online', ck: 'comu' },
      { d: 1, sh: 9,  sm: 0,  eh: 11, em: 0,  n: 'Logica Matematica', tp: 'online', ck: 'logi' }
    ];
 
-13. Nota importante:
+14. Nota importante:
     - No muevas la definición de `COURSES` después de que sea usada por otras variables (`courseMinutes`, `S`, `E`, etc.). Debe declararse antes de esos cálculos.
+
+15. Nota sobre profesores y páginas:
+    - La página de `index.html` ya no incluye la sección de profesores; usa `profesores.html` para ver la lista de docentes.
+    - Si cambias o agregas cursos, asegúrate también de mantener los enlaces correctos en `index.html` y `horario.html`.

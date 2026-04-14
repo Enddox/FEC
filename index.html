@@ -12,6 +12,7 @@
       theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
     }
   </script>
+  <script src="data/site-data.js"></script>
 </head>
 <body class="p-4 md:p-8 flex items-start justify-center">
   <div class="crt w-full max-w-4xl">
@@ -84,23 +85,7 @@
 
         <aside>
           <div class="section-label glow-dim">[ Ultimas Noticias ]</div>
-          <div class="border border-[rgba(0,255,65,0.08)] rounded-md p-3 glow-box" style="background:rgba(0,255,65,0.01)">
-            <div class="news-item">
-              <span class="news-tag" style="background:rgba(0,255,65,0.1);color:rgba(0,255,65,0.5)">comunicado</span>
-              <p class="text-[10px] glow-dim" style="color:rgba(0,255,65,0.6)">La docente Eddymar Matheus informa que la primera clase de Comunicación y Lenguaje será hoy de 18:00 a 20:00, dictada por el Grupo de WhatsApp.</p>
-              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,0.2)">13 abril 2026 — 14:54</p>
-            </div>
-            <div class="news-item">
-              <span class="news-tag" style="background:rgba(0,255,65,0.1);color:rgba(0,255,65,0.5)">comunicado</span>
-              <p class="text-[10px] glow-dim" style="color:rgba(0,255,65,0.6)">Atención los estudiantes de la sección 2 del primer semestre: La materia Algoritmos y Programación I se dará de manera presencial en Grano de Oro el día miércoles de 8:00AM a 9:30AM, tal cual como aparecía en el horario. Además, la materia de la Subárea de Comunicación y Lenguaje del día lunes, que es a distancia, se dará de 6:00PM a 7:30PM. En el horario que colocamos el día de la inscripción aparecía que esta materia se daba de 4:00PM a 6:00PM.</p>
-              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,0.2)">13 abril 2026 — 13:58</p>
-            </div>
-            <div class="news-item">
-              <span class="news-tag" style="background:rgba(239,68,68,0.1);color:rgba(239,68,68,0.5)">aviso</span>
-              <p class="text-[10px] glow-dim" style="color:rgba(0,255,65,0.6)">La clase del día de hoy de Calculo I será suspendida.</p>
-              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,0.2)">13 abril 2026 — 13:46</p>
-            </div>
-          </div>
+          <div id="index-news" class="border border-[rgba(0,255,65,0.08)] rounded-md p-3 glow-box" style="background:rgba(0,255,65,0.01)"></div>
 
         </aside>
 
@@ -108,5 +93,23 @@
 
     </div>
   </div>
+  <script>
+    function renderIndexNews() {
+      const container = document.getElementById('index-news');
+      if (!window.FEC_DATA || !container) return;
+      container.innerHTML = '';
+      window.FEC_DATA.news.forEach((item) => {
+        const newsItem = document.createElement('div');
+        newsItem.className = 'news-item';
+        newsItem.innerHTML = `
+          <span class="news-tag" style="background:rgba(0,255,65,0.1);color:rgba(0,255,65,0.5)">${item.tag}</span>
+          <p class="text-[10px] glow-dim" style="color:rgba(0,255,65,0.6)">${item.content}</p>
+          <p class="text-[8px] mt-1" style="color:rgba(0,255,65,0.2)">${item.date}</p>
+        `;
+        container.appendChild(newsItem);
+      });
+    }
+    renderIndexNews();
+  </script>
 </body>
 </html>

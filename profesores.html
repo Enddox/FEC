@@ -12,6 +12,7 @@
       theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
     }
   </script>
+  <script src="data/site-data.js"></script>
 </head>
 <body class="p-4 md:p-8 flex items-start justify-center">
   <div class="crt w-full max-w-4xl">
@@ -32,20 +33,31 @@
       <div class="grid grid-cols-1 gap-5">
         <div>
           <div class="section-label glow-dim">[ Profesores ]</div>
-          <div class="info-card glow-box mb-4">
-            <div class="info-label">Betsi De Pascal</div>
-            <div class="info-value">Cálculo I</div>
-            <p class="text-[9px] mt-2" style="color:rgba(0,255,65,0.55)">Correo: lorem.ipsum@universidad.edu</p>
-          </div>
-          <div class="info-card glow-box mb-4">
-            <div class="info-label">Eddymar Matheus</div>
-            <div class="info-value">Comunicación y Lenguaje</div>
-            <p class="text-[9px] mt-2" style="color:rgba(0,255,65,0.55)">Correo: lorem.ipsum@universidad.edu</p>
-          </div>
+          <div id="professors-list"></div>
         </div>
       </div>
 
       <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
+    </div>
+  </div>
+  <script>
+    function renderProfessors() {
+      const container = document.getElementById('professors-list');
+      if (!container || !window.FEC_DATA) return;
+      container.innerHTML = '';
+      window.FEC_DATA.professors.forEach((prof) => {
+        const card = document.createElement('div');
+        card.className = 'info-card glow-box mb-4';
+        card.innerHTML = `
+          <div class="info-label">${prof.name}</div>
+          <div class="info-value">${prof.course}</div>
+          <p class="text-[9px] mt-2" style="color:rgba(0,255,65,0.55)">Correo: ${prof.email}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+    renderProfessors();
+  </script>
     </div>
   </div>
 </body>

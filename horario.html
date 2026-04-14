@@ -12,6 +12,7 @@
       theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
     }
   </script>
+  <script src="data/site-data.js"></script>
 </head>
 <body class="p-4 md:p-8 flex items-start justify-center horario-page">
   <div class="crt w-full max-w-5xl">
@@ -51,25 +52,17 @@
   <script>
     const PPM = 0.95;
     const toMin = (h, m) => h * 60 + m;
-    const COURSES = [
-      { d: 0, sh: 14, sm: 45, eh: 16, em: 45, n: 'Calculo I',                  tp: 'online',     ck: 'calc' },
-      { d: 0, sh: 18, sm: 0,  eh: 20, em: 0,  n: 'Subarea de Comunicacion',     tp: 'online',     ck: 'comu' },
-      { d: 1, sh: 9,  sm: 0,  eh: 11, em: 0,  n: 'Logica Matematica',          tp: 'online',     ck: 'logi' },
-      { d: 2, sh: 8,  sm: 0,  eh: 9,  em: 30, n: 'Algoritmos y Programacion I', tp: 'presencial', ck: 'algo' },
-      { d: 2, sh: 9,  sm: 30,  eh: 11, em: 0,  n: 'Logica Matematica',          tp: 'online',     ck: 'logi' },
-      { d: 3, sh: 8,  sm: 0,  eh: 11, em: 0,  n: 'PPI',                        tp: 'online',     ck: 'ppi'  },
-      { d: 4, sh: 9,  sm: 0,  eh: 12, em: 15, n: 'Orientacion I',              tp: 'online',     ck: 'orie' },
-      { d: 4, sh: 14, sm: 0,  eh: 16, em: 45, n: 'Calculo I',                  tp: 'online',     ck: 'calc' }
-    ];
-    const COURSE_LINKS = {
-      calc: 'calculoi.html',
-      comu: 'comunicacion.html',
-      logi: 'logicamatematica.html',
-      algo: 'algoritmos.html',
-      orie: 'orientacion.html',
-      ppi: 'ppi.html'
-    };
-    const courseMinutes = COURSES.map(c => ({
+    const courses = window.FEC_DATA.courses;
+    const schedule = window.FEC_DATA.schedule.map((item) => {
+      const match = courses.find((course) => course.ck === item.ck) || {};
+      return {
+        ...item,
+        name: match.name || item.ck,
+        filename: match.filename || '#'
+      };
+    });
+    const COURSE_LINKS = Object.fromEntries(courses.map((course) => [course.ck, course.filename]));
+    const courseMinutes = schedule.map((c) => ({
       start: toMin(c.sh, c.sm),
       end: toMin(c.eh, c.em)
     }));
@@ -140,7 +133,7 @@
         col.appendChild(line);
       }
 
-      const dayCourses = COURSES.filter(c => c.d === di);
+      const dayCourses = schedule.filter(c => c.d === di);
 
       dayCourses.forEach(c => {
         const startM = toMin(c.sh, c.sm);
@@ -165,7 +158,7 @@
               <span class="text-[7px] font-bold tracking-wider glow-dim" style="color:rgba(0,255,65,0.5)">[${typeLabel}]</span>
               ${overlaps ? '<span class="solap text-[7px] font-bold tracking-wider ml-1">!SOLAP</span>' : ''}
             </div>
-            <p class="text-[.72rem] font-semibold leading-tight glow" style="font-size:${compact ? '.62' : '.72'}rem">${c.n}</p>
+            <p class="text-[.72rem] font-semibold leading-tight glow" style="font-size:${compact ? '.62' : '.72'}rem">${c.name}</p>
             ${!compact ? `<p class="text-[.55rem] mt-0.5" style="color:rgba(0,255,65,0.25)">${fmt(c.sh, c.sm)}-${fmt(c.eh, c.em)}</p>` : ''}
           </a>
         `;

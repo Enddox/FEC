@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script>tailwind.config={theme:{extend:{fontFamily:{mono:['JetBrains Mono','monospace']}}}}</script>
+  <script src="data/site-data.js"></script>
 </head>
 <body class="p-4 md:p-8 flex items-start justify-center">
   <div class="crt w-full max-w-4xl">
@@ -106,50 +107,7 @@
 
         <aside>
           <div class="section-label glow-dim">[ Actividades ]</div>
-          <div class="border border-[rgba(0,255,65,.08)] rounded-md p-3 glow-box sidebar-scroll" style="background:rgba(0,255,65,.01)">
-
-            <div class="activity-item">
-              <span class="activity-tag tag-hw">tarea</span>
-              <p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.7)">Analisis de la gráfica del manual</p>
-              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.35)">Explicar con sus propias palabras como se conectan los elementos en la gráfica que aparece dentro del manual. (Realizar en cuaderno).</p>
-              <div class="mt-4 overflow-hidden rounded-md border border-[rgba(0,255,65,.08)] bg-[#050505]">
-                <img src="data/image.png" alt="Gráfica del manual" class="w-full object-cover" />
-              </div>
-              <div class="date-row">
-                <div>
-                  <div class="date-label">Asignada</div>
-                  <div class="date-val">13 abril 2026</div>
-                </div>
-                <div>
-                  <div class="date-label">Entrega</div>
-                  <div class="date-val">19 abril 2026</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="activity-item">
-              <span class="activity-tag tag-hw">tarea</span>
-              <p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.7)">Investigacion de Autores</p>
-              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.35)">Elaborar una breve reseña sobre la trayectoria y los aportes a la linguistica de Ferdinand de Saussure, Lev Vygotsky y Noam Chomsky. (Realizar en cuaderno).</p>
-              <div class="date-row">
-                <div>
-                  <div class="date-label">Asignada</div>
-                  <div class="date-val">13 abril 2026</div>
-                </div>
-                <div>
-                  <div class="date-label">Entrega</div>
-                  <div class="date-val">19 abril 2026</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="activity-item" style="opacity:.4">
-              <span class="activity-tag tag-exam">examen</span>
-              <p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.5)">Sin examenes registrados</p>
-              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.2)">Se agregaran cuando se comuniquen.</p>
-            </div>
-
-          </div>
+          <div id="comunicacion-activities" class="border border-[rgba(0,255,65,.08)] rounded-md p-3 glow-box sidebar-scroll" style="background:rgba(0,255,65,.01)"></div>
         </aside>
 
       </div>
@@ -169,6 +127,38 @@
         }, 1500);
       });
     }
+
+    function renderComunicacionActivities() {
+      const container = document.getElementById('comunicacion-activities');
+      if (!container || !window.FEC_DATA) return;
+      container.innerHTML = '';
+      window.FEC_DATA.activities.comu.forEach((item) => {
+        const activity = document.createElement('div');
+        activity.className = 'activity-item';
+        activity.innerHTML = `
+          <span class="activity-tag tag-hw">${item.type}</span>
+          <p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.7)">${item.title}</p>
+          <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.35)">${item.desc}</p>
+          ${item.image ? `<div class="mt-4 overflow-hidden rounded-md border border-[rgba(0,255,65,.08)] bg-[#050505]"><img src="${item.image}" alt="Actividad visual" class="w-full object-cover" /></div>` : ''}
+          <div class="date-row">
+            <div>
+              <div class="date-label">Asignada</div>
+              <div class="date-val">${item.assigned}</div>
+            </div>
+            <div>
+              <div class="date-label">Entrega</div>
+              <div class="date-val">${item.due}</div>
+            </div>
+          </div>
+        `;
+        container.appendChild(activity);
+      });
+      if (window.FEC_DATA.activities.comu.length === 0) {
+        container.innerHTML = '<div class="activity-item" style="opacity:.4"><span class="activity-tag tag-exam">aviso</span><p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.5)">No hay actividades registradas</p></div>';
+      }
+    }
+    renderComunicacionActivities();
   </script>
 </body>
+</html>
 </html>

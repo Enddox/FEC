@@ -1,86 +1,94 @@
-Guía para editar el horario en horario.html
+Guía para editar los datos modulares del horario y las páginas relacionadas
 
-1. Ubica el archivo:
-   - `horario.html`
+1. Ubica el archivo de datos:
+   - `data/site-data.js`
+   - Este archivo ahora contiene la configuración de cursos, el horario, profesores, actividades y noticias.
 
-2. Busca la sección de cursos:
-   - En el archivo, hay un arreglo JavaScript llamado `COURSES`.
-   - Está dentro de la etiqueta `<script>` cerca del inicio del código JavaScript.
+2. Cómo funciona ahora:
+   - Todas las páginas principales cargan `data/site-data.js`.
+   - El horario usa `FEC_DATA.schedule` y `FEC_DATA.courses` para dibujar bloques.
+   - La página de `profesores.html` usa `FEC_DATA.professors`.
+   - `index.html` usa `FEC_DATA.news`.
+   - `comunicacion.html` usa `FEC_DATA.activities.comu`.
 
-3. Estructura de cada materia:
-   - Cada materia tiene esta forma:
+3. Estructura de los cursos:
+   - Cada curso está definido en `FEC_DATA.courses`.
+   - Ejemplo de curso:
      {
-       d: 0,           // día de la semana (0 = lunes, 1 = martes, 2 = miércoles, 3 = jueves, 4 = viernes)
-       sh: 14,         // hora de inicio en formato 24h
-       sm: 45,         // minutos de inicio
-       eh: 20,         // hora de fin en formato 24h
-       em: 0,          // minutos de fin
-       n: 'Nombre',    // nombre de la materia
-       tp: 'online',   // tipo de clase: 'online' o 'presencial'
-       ck: 'comu'      // código corto interno (no visible)
-       // pr: 'Profesor' // opcional: nombre del profesor, solo se muestra en bloques grandes
+       ck: 'calc',
+       filename: 'calculoi.html',
+       name: 'Cálculo I',
+       pageTitle: 'Calculo I - I-2026',
+       modalidad: 'Online',
+       profesor: 'Betsi De Pascal',
+       classroomCode: '4nmacc2h',
+       classroomUrl: 'https://classroom.google.com',
+       zoomId: '86303507525',
+       zoomPass: '4ua8xi',
+       zoomUrl: 'https://zoom.us/join',
+       whatsappUrl: 'https://chat.whatsapp.com/I6s368JjVsv5eWfm4rXhM3?mode=gi_t',
+       groupLabel: 'Grupo de WhatsApp'
      }
 
-4. Cambiar horas de una materia existente:
-   - Actualiza `sh` y `sm` para la hora de inicio.
-   - Actualiza `eh` y `em` para la hora de fin.
-   - Ejemplo: cambiar comunicación a 18:00–20:00:
-     { d: 0, sh: 18, sm: 0, eh: 20, em: 0, n: 'Subarea de Comunicacion', tp: 'online', ck: 'comu' }
-
-5. Agregar una materia nueva:
-   - Añade un nuevo objeto dentro del arreglo `COURSES`.
-   - Usa el mismo formato de las demás materias.
+4. Cambiar horas o agregar materias en el horario:
+   - Edita `FEC_DATA.schedule` en `data/site-data.js`.
+   - Cada elemento de horario usa el mismo `ck` que un curso.
    - Ejemplo:
-     { d: 3, sh: 16, sm: 0, eh: 18, em: 0, n: 'Nueva Materia', tp: 'presencial', ck: 'nueva', pr: 'Nombre Profesor' }
+     { d: 0, sh: 18, sm: 0, eh: 20, em: 0, ck: 'comu', tp: 'online' }
 
-6. Eliminar una materia:
-   - Borra la línea u objeto correspondiente dentro del arreglo `COURSES`.
-   - Asegúrate de mantener la sintaxis de coma correcta entre los objetos.
+5. Qué significan los campos de horario:
+   - `d`: día de la semana (0 = lunes, 1 = martes, 2 = miércoles, 3 = jueves, 4 = viernes)
+   - `sh`: hora de inicio (24h)
+   - `sm`: minuto de inicio
+   - `eh`: hora de fin (24h)
+   - `em`: minuto de fin
+   - `ck`: código de curso, usado para enlazar al curso y obtener su nombre
+   - `tp`: tipo de clase ('online' o 'presencial')
 
-7. Orden y soporte de horas:
-   - El horario ajusta automáticamente el rango de horas a partir de las materias.
-   - No hay un límite fijo de 5pm, el código ahora calcula el horario según el máximo `eh/em` usado.
-   - Sin embargo, el día mínimo aún comienza a las 8:00 y el día máximo se redondea hacia arriba.
+6. Enlaces automáticos de horario a páginas de curso:
+   - Cada bloque del horario usa `ck` para encontrar `filename` en `FEC_DATA.courses`.
+   - Si la materia tiene curso y página configurada, el bloque apunta a esa página.
+   - Para agregar un enlace nuevo, añade un curso en `FEC_DATA.courses` con `ck` y `filename`.
 
-8. Día de la semana:
-   - Usa `d: 0` para lunes, `d: 1` para martes, `d: 2` para miércoles, `d: 3` para jueves, `d: 4` para viernes.
+7. Actividades por curso:
+   - Las actividades están en `FEC_DATA.activities`.
+   - Por ejemplo, `FEC_DATA.activities.comu` contiene las tareas de comunicación.
+   - Estructura de actividad:
+     {
+       type: 'tarea',
+       title: 'Título de la tarea',
+       desc: 'Descripción de la tarea',
+       assigned: '13 abril 2026',
+       due: '19 abril 2026',
+       image: 'data/image.png' // opcional
+     }
 
-9. Tipos de clase:
-   - `tp: 'online'` para clases en línea.
-   - `tp: 'presencial'` para clases presenciales.
+8. Noticias del index:
+   - Usa `FEC_DATA.news` para definir los comunicados que se muestran en `index.html`.
+   - Ejemplo:
+     {
+       tag: 'comunicado',
+       content: 'Texto del comunicado',
+       date: '13 abril 2026 — 14:54'
+     }
 
-10. Verificar los cambios:
-    - Guarda `horario.html`.
-    - Abre la página en el navegador para confirmar que el bloque aparece en la columna del día correcto.
-    - Si el horario sigue vacío, revisa errores de sintaxis en el arreglo `COURSES`.
+9. Profesores y contactos:
+   - Edita `FEC_DATA.professors` en `data/site-data.js`.
+   - Cada profesor tiene `name`, `course`, `email`.
+   - La página `profesores.html` se actualiza automáticamente desde esos datos.
 
-11. Vínculos de materias desde el horario:
-    - El horario puede enlazar cada materia a su página correspondiente.
-    - Para eso usa el campo `ck` de cada materia y añade la ruta en el objeto `COURSE_LINKS` dentro de `horario.html`.
-    - Ejemplo:
-      const COURSE_LINKS = {
-        calc: 'calculoi.html',
-        comu: 'comunicacion.html',
-        logi: 'logicamatematica.html'
-      };
-    - Si agregas una nueva materia con `ck: 'algo'`, también debes agregar la entrada `algo: 'algoritmos.html'`.
+10. Verificación antes de publicar:
+    - Guarda los cambios en `data/site-data.js`.
+    - Abre la página correspondiente en el navegador.
+    - Si algo no aparece, comprueba el `ck` del horario y que `filename` exista.
 
-12. Commit y push:
-    - Después de hacer cambios en `horario.html`, ejecuta:
-      git add horario.html
-      git commit -m "Actualiza horario: [descripción de cambios]"
+11. Commit y push:
+    - Después de editar los datos y revisar las páginas, ejecuta:
+      git add data/site-data.js
+      git add index.html horario.html profesores.html comunicacion.html
+      git commit -m "Modulariza datos y actualiza páginas con site-data.js"
       git push
 
-13. Ejemplo completo de `COURSES`:
-   const COURSES = [
-     { d: 0, sh: 14, sm: 45, eh: 16, em: 45, n: 'Calculo I', tp: 'online', ck: 'calc' },
-     { d: 0, sh: 18, sm: 0,  eh: 20, em: 0,  n: 'Subarea de Comunicacion', tp: 'online', ck: 'comu' },
-     { d: 1, sh: 9,  sm: 0,  eh: 11, em: 0,  n: 'Logica Matematica', tp: 'online', ck: 'logi' }
-   ];
-
-14. Nota importante:
-    - No muevas la definición de `COURSES` después de que sea usada por otras variables (`courseMinutes`, `S`, `E`, etc.). Debe declararse antes de esos cálculos.
-
-15. Nota sobre profesores y páginas:
-    - La página de `index.html` ya no incluye la sección de profesores; usa `profesores.html` para ver la lista de docentes.
-    - Si cambias o agregas cursos, asegúrate también de mantener los enlaces correctos en `index.html` y `horario.html`.
+12. Nota importante:
+    - No muevas `data/site-data.js` de carpeta: todas las páginas esperan cargarlo desde `data/site-data.js`.
+    - Si agregas cursos nuevos, asegúrate de que también existan las páginas `.html` correspondientes o el enlace quedará en `#`.

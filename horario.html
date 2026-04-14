@@ -58,9 +58,17 @@
       { d: 2, sh: 8,  sm: 0,  eh: 9,  em: 30, n: 'Algoritmos y Programacion I', tp: 'presencial', ck: 'algo' },
       { d: 2, sh: 9,  sm: 30,  eh: 11, em: 0,  n: 'Logica Matematica',          tp: 'online',     ck: 'logi' },
       { d: 3, sh: 8,  sm: 0,  eh: 11, em: 0,  n: 'PPI',                        tp: 'online',     ck: 'ppi'  },
-      { d: 4, sh: 9,  sm: 0,  eh: 12, em: 15, n: 'Orientacion I',              tp: 'online',     ck: 'orie', pr: 'Julietta Oquendo' },
+      { d: 4, sh: 9,  sm: 0,  eh: 12, em: 15, n: 'Orientacion I',              tp: 'online',     ck: 'orie' },
       { d: 4, sh: 14, sm: 0,  eh: 16, em: 45, n: 'Calculo I',                  tp: 'online',     ck: 'calc' }
     ];
+    const COURSE_LINKS = {
+      calc: 'calculoi.html',
+      comu: 'comunicacion.html',
+      logi: 'logicamatematica.html',
+      algo: 'algoritmos.html',
+      orie: 'orientacion.html',
+      ppi: 'ppi.html'
+    };
     const courseMinutes = COURSES.map(c => ({
       start: toMin(c.sh, c.sm),
       end: toMin(c.eh, c.em)
@@ -144,20 +152,22 @@
           o !== c && startM < toMin(o.eh, o.em) && endM > toMin(o.sh, o.sm)
         );
         const compact = ht < 55;
+        const url = COURSE_LINKS[c.ck] || '#';
 
         const block = document.createElement('div');
         block.className = 'cb' + (overlaps ? ' solap-border' : '');
         block.style.cssText = `top:${top}px;height:${Math.max(ht, 26)}px`;
 
         block.innerHTML = `
-          <div class="bar"></div>
-          <div class="flex items-center gap-0 mb-0.5">
-            <span class="text-[7px] font-bold tracking-wider glow-dim" style="color:rgba(0,255,65,0.5)">[${typeLabel}]</span>
-            ${overlaps ? '<span class="solap text-[7px] font-bold tracking-wider ml-1">!SOLAP</span>' : ''}
-          </div>
-          <p class="text-[.72rem] font-semibold leading-tight glow" style="font-size:${compact ? '.62' : '.72'}rem">${c.n}</p>
-          ${!compact && c.pr ? `<p class="text-[.55rem] mt-0.5 glow-dim" style="color:rgba(0,255,65,0.4)">&lt;${c.pr}&gt;</p>` : ''}
-          ${!compact ? `<p class="text-[.55rem] mt-0.5" style="color:rgba(0,255,65,0.25)">${fmt(c.sh, c.sm)}-${fmt(c.eh, c.em)}</p>` : ''}
+          <a href="${url}" class="block" style="display:block;width:100%;height:100%;color:inherit;text-decoration:none;">
+            <div class="bar"></div>
+            <div class="flex items-center gap-0 mb-0.5">
+              <span class="text-[7px] font-bold tracking-wider glow-dim" style="color:rgba(0,255,65,0.5)">[${typeLabel}]</span>
+              ${overlaps ? '<span class="solap text-[7px] font-bold tracking-wider ml-1">!SOLAP</span>' : ''}
+            </div>
+            <p class="text-[.72rem] font-semibold leading-tight glow" style="font-size:${compact ? '.62' : '.72'}rem">${c.n}</p>
+            ${!compact ? `<p class="text-[.55rem] mt-0.5" style="color:rgba(0,255,65,0.25)">${fmt(c.sh, c.sm)}-${fmt(c.eh, c.em)}</p>` : ''}
+          </a>
         `;
 
         col.appendChild(block);

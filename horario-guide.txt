@@ -1,0 +1,71 @@
+Guía para editar el horario en horario.html
+
+1. Ubica el archivo:
+   - `horario.html`
+
+2. Busca la sección de cursos:
+   - En el archivo, hay un arreglo JavaScript llamado `COURSES`.
+   - Está dentro de la etiqueta `<script>` cerca del inicio del código JavaScript.
+
+3. Estructura de cada materia:
+   - Cada materia tiene esta forma:
+     {
+       d: 0,           // día de la semana (0 = lunes, 1 = martes, 2 = miércoles, 3 = jueves, 4 = viernes)
+       sh: 14,         // hora de inicio en formato 24h
+       sm: 45,         // minutos de inicio
+       eh: 20,         // hora de fin en formato 24h
+       em: 0,          // minutos de fin
+       n: 'Nombre',    // nombre de la materia
+       tp: 'online',   // tipo de clase: 'online' o 'presencial'
+       ck: 'comu'      // código corto interno (no visible)
+       // pr: 'Profesor' // opcional: nombre del profesor, solo se muestra en bloques grandes
+     }
+
+4. Cambiar horas de una materia existente:
+   - Actualiza `sh` y `sm` para la hora de inicio.
+   - Actualiza `eh` y `em` para la hora de fin.
+   - Ejemplo: cambiar comunicación a 18:00–20:00:
+     { d: 0, sh: 18, sm: 0, eh: 20, em: 0, n: 'Subarea de Comunicacion', tp: 'online', ck: 'comu' }
+
+5. Agregar una materia nueva:
+   - Añade un nuevo objeto dentro del arreglo `COURSES`.
+   - Usa el mismo formato de las demás materias.
+   - Ejemplo:
+     { d: 3, sh: 16, sm: 0, eh: 18, em: 0, n: 'Nueva Materia', tp: 'presencial', ck: 'nueva', pr: 'Nombre Profesor' }
+
+6. Eliminar una materia:
+   - Borra la línea u objeto correspondiente dentro del arreglo `COURSES`.
+   - Asegúrate de mantener la sintaxis de coma correcta entre los objetos.
+
+7. Orden y soporte de horas:
+   - El horario ajusta automáticamente el rango de horas a partir de las materias.
+   - No hay un límite fijo de 5pm, el código ahora calcula el horario según el máximo `eh/em` usado.
+   - Sin embargo, el día mínimo aún comienza a las 8:00 y el día máximo se redondea hacia arriba.
+
+8. Día de la semana:
+   - Usa `d: 0` para lunes, `d: 1` para martes, `d: 2` para miércoles, `d: 3` para jueves, `d: 4` para viernes.
+
+9. Tipos de clase:
+   - `tp: 'online'` para clases en línea.
+   - `tp: 'presencial'` para clases presenciales.
+
+10. Verificar los cambios:
+    - Guarda `horario.html`.
+    - Abre la página en el navegador para confirmar que el bloque aparece en la columna del día correcto.
+    - Si el horario sigue vacío, revisa errores de sintaxis en el arreglo `COURSES`.
+
+11. Commit y push:
+    - Después de hacer cambios en `horario.html`, ejecuta:
+      git add horario.html
+      git commit -m "Actualiza horario: [descripción de cambios]"
+      git push
+
+12. Ejemplo completo de `COURSES`:
+   const COURSES = [
+     { d: 0, sh: 14, sm: 45, eh: 16, em: 45, n: 'Calculo I', tp: 'online', ck: 'calc' },
+     { d: 0, sh: 18, sm: 0,  eh: 20, em: 0,  n: 'Subarea de Comunicacion', tp: 'online', ck: 'comu' },
+     { d: 1, sh: 9,  sm: 0,  eh: 11, em: 0,  n: 'Logica Matematica', tp: 'online', ck: 'logi' }
+   ];
+
+13. Nota importante:
+    - No muevas la definición de `COURSES` después de que sea usada por otras variables (`courseMinutes`, `S`, `E`, etc.). Debe declararse antes de esos cálculos.

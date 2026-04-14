@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profesores y Contacto - I-2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
+    }
+  </script>
+</head>
+<body class="p-4 md:p-8 flex items-start justify-center">
+  <div class="crt w-full max-w-4xl">
+    <div class="screen">
+      <a href="index.html" class="back-link glow-dim">&larr; ../inicio</a>
+
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">sys@universidad</span>
+        <span class="text-[10px]" style="color:rgba(0,255,65,0.2)">~</span>
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">profesores_contacto</span>
+      </div>
+
+      <p class="text-xs mb-4 glow-dim" style="color:rgba(0,255,65,0.35)">$ cat /contacto/profesores.dat</p>
+
+      <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-1">PROFESORES & CONTACTO</h1>
+      <p class="text-[11px] mb-5 glow-dim" style="color:rgba(0,255,65,0.4)">1er. Semestre &mdash; Seccion 2 &mdash; I-2026</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_260px] gap-5">
+        <div>
+          <div class="section-label glow-dim">[ Profesores ]</div>
+          <div class="info-card glow-box mb-4">
+            <div class="info-label">Betsi De Pascal</div>
+            <div class="info-value">Cálculo I</div>
+            <p class="text-[9px] mt-2" style="color:rgba(0,255,65,0.55)">Correo: betsi.placeholder@universidad.edu</p>
+          </div>
+          <div class="info-card glow-box mb-4">
+            <div class="info-label">Eddymar Matheus</div>
+            <div class="info-value">Comunicación y Lenguaje</div>
+            <p class="text-[9px] mt-2" style="color:rgba(0,255,65,0.55)">Correo: eddymar.placeholder@universidad.edu</p>
+          </div>
+          <div class="info-card glow-box mb-4">
+            <div class="info-label">Profesor/a placeholder</div>
+            <div class="info-value">Materia pendiente</div>
+            <p class="text-[9px] mt-2" style="color:rgba(0,255,65,0.55)">Correo: profesor.placeholder@universidad.edu</p>
+          </div>
+
+          <div class="section-label glow-dim">[ Observaciones ]</div>
+          <div class="info-card glow-box">
+            <p class="text-[10px]" style="color:rgba(0,255,65,0.6)">Todos los datos anteriores son exemplares. Reemplaza los placeholders cuando tengas la información real del personal docente y sus contactos.</p>
+          </div>
+        </div>
+
+        <aside>
+          <div class="section-label glow-dim">[ Contacto ]</div>
+          <div class="info-card glow-box mb-4">
+            <div class="info-label">Soporte general</div>
+            <div class="info-value mono" style="font-size:13px">soporte.placeholder@universidad.edu</div>
+          </div>
+          <div class="info-card glow-box mb-4">
+            <div class="info-label">Classroom</div>
+            <a href="https://classroom.google.com" target="_blank" class="link-btn link-classroom">Abrir Classroom</a>
+          </div>
+          <div class="info-card glow-box mb-4">
+            <div class="info-label">Whatsapp</div>
+            <a href="#" class="link-btn link-wa">Enlace de grupo pendiente</a>
+          </div>
+          <div class="info-card glow-box mb-4">
+            <div class="info-label">Telegram</div>
+            <a href="#" class="link-btn btn-tg">Enlace pendiente</a>
+          </div>
+          <div class="info-card glow-box">
+            <div class="info-label">Nota</div>
+            <p class="text-[9px]" style="color:rgba(0,255,65,0.55)">Si no tienes datos completos aún, usa esta página para guardar la información de los profesores y los canales de comunicación.</p>
+          </div>
+        </aside>
+      </div>
+
+      <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
+    </div>
+  </div>
+</body>
+</html>

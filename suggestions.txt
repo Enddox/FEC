@@ -1,0 +1,46 @@
+Sugerencias de mejoras restantes para el sitio FEC:
+
+1. Crear una plantilla de navegación común.
+   - Un header o footer compartido facilitaría añadir nuevas materias y evitar duplicar el menú.
+
+2. Agregar fechas reales y estado de entrega a actividades.
+   - Permite a los estudiantes saber qué está pendiente y qué ya está programado.
+
+3. Incluir un pequeño índice o resumen de temas en cada materia.
+   - Ayuda a saber qué parte del manual corresponde a cada tarea.
+
+4. Añadir validación de accesos y enlaces rotos.
+   - Un pequeño script podría detectar si algún `href` o recurso local falta.
+
+5. Crear una página principal de ayuda o FAQ.
+   - Esto permitiría resolver dudas rápidas sobre cómo usar el sistema y dónde encontrar los materiales.
+
+6. Añadir un menú de búsqueda o filtrado de materias.
+   - Facilita encontrar rápido una materia cuando haya muchas páginas.
+
+7. Mejorar la accesibilidad con contraste y etiquetas ARIA.
+   - Botones y enlaces claros, enfoque visible y texto alternativo en imágenes.
+
+8. Integrar un sistema de notas o recordatorios para los alumnos.
+   - Podría ser un pequeño panel donde se muestren próximas entregas y avisos.
+
+9. Añadir una sección de "Últimos cambios" en cada materia.
+   - Mostrar actualizaciones recientes del curso o avisos importantes.
+
+10. Usar un historial de versiones simple para material y actividades.
+    - Ayuda a los alumnos a saber cuándo se actualizó el manual o la tarea.
+
+11. Añadir validación de archivos locales y recursos multimedia.
+    - Asegura que el PDF, las imágenes y los enlaces existan antes de publicar.
+
+12. Agregar gráficos o resúmenes visuales del progreso del semestre.
+    - Un pequeño dashboard con estado de materias, actividades y horarios.
+
+13. Crear plantillas reutilizables para páginas de materia.
+    - Evita copiar estilos y estructuras repetidamente, facilitando el mantenimiento.
+
+14. Incluir un footer con datos del autor y la URL del repo.
+    - Hace más profesional el sitio y facilita encontrar la fuente del proyecto.
+
+15. Probar el sitio en modo móvil y ajustar el diseño responsivo.
+    - Asegura que las páginas sean navegables en celular y tablet.

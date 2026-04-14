@@ -6,59 +6,9 @@
   <title>Sub-Area Comunicacion - I-2026</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script>tailwind.config={theme:{extend:{fontFamily:{mono:['JetBrains Mono','monospace']}}}}</script>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'JetBrains Mono',monospace;background:#050505;color:#00ff41;min-height:100vh}
-    .crt{position:relative;border-radius:18px;padding:3px;background:linear-gradient(145deg,#1a1a1a,#0a0a0a);box-shadow:0 0 60px rgba(0,255,65,.07),0 0 2px rgba(0,255,65,.3),inset 0 0 80px rgba(0,0,0,.8)}
-    .crt::before{content:'';position:absolute;inset:0;border-radius:18px;background:repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0px,rgba(0,0,0,.15) 1px,transparent 1px,transparent 3px);pointer-events:none;z-index:50}
-    .crt::after{content:'';position:absolute;inset:0;border-radius:18px;background:radial-gradient(ellipse at 30% 20%,rgba(0,255,65,.03) 0%,transparent 60%);pointer-events:none;z-index:51}
-    .screen{background:#0a0a0a;border-radius:15px;padding:28px;position:relative;overflow:hidden}
-    .screen::before{content:'';position:absolute;inset:0;border-radius:15px;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.6) 100%);pointer-events:none;z-index:40}
-    @keyframes flicker{0%,100%{opacity:1}92%{opacity:1}93%{opacity:.85}94%{opacity:1}96%{opacity:.9}97%{opacity:1}}
-    .screen{animation:flicker 8s infinite}
-    .glow{text-shadow:0 0 6px rgba(0,255,65,.5),0 0 20px rgba(0,255,65,.15)}
-    .glow-dim{text-shadow:0 0 4px rgba(0,255,65,.3)}
-    .glow-box{box-shadow:0 0 8px rgba(0,255,65,.08),inset 0 0 8px rgba(0,255,65,.03)}
-    .info-card{border:1px solid rgba(0,255,65,.1);border-radius:6px;padding:14px;background:rgba(0,255,65,.015);transition:all .15s}
-    .info-card:hover{border-color:rgba(0,255,65,.25);background:rgba(0,255,65,.04)}
-    .info-label{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:rgba(0,255,65,.3);margin-bottom:6px}
-    .info-value{font-size:13px;font-weight:600;color:rgba(0,255,65,.8)}
-    .info-value.mono{font-family:'JetBrains Mono',monospace;letter-spacing:.05em}
-    .copy-btn{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:3px;font-size:9px;border:1px solid rgba(0,255,65,.15);color:rgba(0,255,65,.5);background:rgba(0,255,65,.04);cursor:pointer;transition:all .15s;margin-top:6px}
-    .copy-btn:hover{border-color:rgba(0,255,65,.4);color:#00ff41;background:rgba(0,255,65,.1)}
-    .copy-btn.copied{border-color:rgba(0,255,65,.5);color:#00ff41}
-    .link-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:.06em;text-decoration:none;transition:all .15s}
-    .link-classroom{border:1px solid rgba(0,200,83,.3);color:#00c853;background:rgba(0,200,83,.06)}
-    .link-classroom:hover{background:rgba(0,200,83,.15);border-color:rgba(0,200,83,.5);box-shadow:0 0 12px rgba(0,200,83,.1)}
-    .link-zoom{border:1px solid rgba(0,132,255,.3);color:#0084ff;background:rgba(0,132,255,.06)}
-    .link-zoom:hover{background:rgba(0,132,255,.15);border-color:rgba(0,132,255,.5);box-shadow:0 0 12px rgba(0,132,255,.1)}
-    .link-wa{border:1px solid rgba(37,211,102,.3);color:#25d366;background:rgba(37,211,102,.06)}
-    .link-wa:hover{background:rgba(37,211,102,.15);border-color:rgba(37,211,102,.5);box-shadow:0 0 12px rgba(37,211,102,.1)}
-    .link-dl{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:3px;font-size:9px;font-weight:600;letter-spacing:.05em;text-decoration:none;border:1px solid rgba(0,132,255,.25);color:rgba(0,132,255,.6);background:rgba(0,132,255,.04);transition:all .15s;margin-top:6px}
-    .link-dl:hover{background:rgba(0,132,255,.12);border-color:rgba(0,132,255,.4)}
-    .pending{color:rgba(245,158,11,.5);text-shadow:0 0 3px rgba(245,158,11,.15)}
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-    .cursor-blink::after{content:'█';animation:blink 1s step-end infinite;margin-left:2px;font-size:.8em}
-    .back-link{display:inline-flex;align-items:center;gap:6px;color:rgba(0,255,65,.4);text-decoration:none;font-size:11px;transition:color .15s;margin-bottom:16px}
-    .back-link:hover{color:#00ff41}
-    .section-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,255,65,.3);padding:4px 0;border-bottom:1px solid rgba(0,255,65,.06);margin-bottom:8px}
-    .activity-item{border:1px solid rgba(0,255,65,.08);border-radius:6px;padding:12px;background:rgba(0,255,65,.01);margin-bottom:8px;transition:all .15s}
-    .activity-item:hover{border-color:rgba(0,255,65,.2);background:rgba(0,255,65,.03)}
-    .activity-tag{display:inline-block;font-size:7px;letter-spacing:.1em;text-transform:uppercase;padding:1px 5px;border-radius:3px;margin-bottom:4px}
-    .tag-hw{background:rgba(0,255,65,.1);color:rgba(0,255,65,.5)}
-    .tag-exam{background:rgba(239,68,68,.1);color:rgba(239,68,68,.6)}
-    .tag-material{background:rgba(0,132,255,.1);color:rgba(0,132,255,.6)}
-    .date-row{display:flex;gap:16px;margin-top:6px}
-    .date-label{font-size:8px;letter-spacing:.08em;color:rgba(0,255,65,.25)}
-    .date-val{font-size:9px;color:rgba(0,255,65,.5)}
-    .sidebar-scroll{max-height:600px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#1a1a1a transparent}
-    .sidebar-scroll::-webkit-scrollbar{width:4px}
-    .sidebar-scroll::-webkit-scrollbar-track{background:transparent}
-    .sidebar-scroll::-webkit-scrollbar-thumb{background:#1a1a1a;border-radius:2px}
-    .restriction{border:1px solid rgba(239,68,68,.15);border-radius:4px;padding:8px 10px;background:rgba(239,68,68,.03);margin-top:8px}
-  </style>
 </head>
 <body class="p-4 md:p-8 flex items-start justify-center">
   <div class="crt w-full max-w-4xl">
@@ -89,8 +39,10 @@
             <div class="info-card glow-box">
               <div class="info-label">Modalidad</div>
               <div class="info-value">Online / Presencial</div>
-            </div>
-          </div>
+            </div>          <div class="info-card glow-box">
+            <div class="info-label">Profesor/a</div>
+            <div class="info-value">Eddymar Matheus</div>
+          </div>          </div>
 
           <div class="section-label glow-dim">[ Google Classroom ]</div>
           <div class="info-card glow-box mb-5">
@@ -140,8 +92,8 @@
             <span class="activity-tag tag-material">material</span>
             <p class="text-[11px] font-semibold" style="color:rgba(0,255,65,.7)">Manual de Lenguaje y Comunicacion (PDF)</p>
             <p class="text-[9px] mt-1" style="color:rgba(0,255,65,.35)">Material base del semestre.</p>
-            <a href="#" class="link-dl">
-              <i class="fa-solid fa-download" style="font-size:8px"></i> Descargar
+            <a href="data/Manual EUS Lenguaje y Comunicación..pdf" target="_blank" class="link-dl">
+              <i class="fa-solid fa-download" style="font-size:8px"></i> Descargar manual
             </a>
             <div class="restriction">
               <p class="text-[8px] font-semibold" style="color:rgba(239,68,68,.5);text-shadow:0 0 3px rgba(239,68,68,.2)"><i class="fa-solid fa-triangle-exclamation" style="font-size:7px;margin-right:3px"></i>RESTRICCION</p>
@@ -158,11 +110,11 @@
 
             <div class="activity-item">
               <span class="activity-tag tag-hw">tarea</span>
-              <p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.7)">Analisis de Grafica 1</p>
-              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.35)">Explicar con sus propias palabras como se conectan los elementos (lengua, habla, lenguaje) en la "Grafica numero 1" de las diapositivas. (Realizar en cuaderno).</p>
-              <a href="#" class="link-dl">
-                <i class="fa-solid fa-file-powerpoint" style="font-size:8px"></i> Diapositivas
-              </a>
+              <p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.7)">Analisis de la gráfica del manual</p>
+              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.35)">Explicar con sus propias palabras como se conectan los elementos en la gráfica que aparece dentro del manual. (Realizar en cuaderno).</p>
+              <div class="mt-4 overflow-hidden rounded-md border border-[rgba(0,255,65,.08)] bg-[#050505]">
+                <img src="data/image.png" alt="Gráfica del manual" class="w-full object-cover" />
+              </div>
               <div class="date-row">
                 <div>
                   <div class="date-label">Asignada</div>

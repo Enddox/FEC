@@ -49,8 +49,18 @@
   </div>
 
   <script>
-    const PPM = 0.95, S = 8, E = 18, TOT = (E - S) * 60, H = TOT * PPM;
+    const PPM = 0.95;
     const toMin = (h, m) => h * 60 + m;
+    const courseMinutes = COURSES.map(c => ({
+      start: toMin(c.sh, c.sm),
+      end: toMin(c.eh, c.em)
+    }));
+    const minStart = courseMinutes.length ? Math.min(...courseMinutes.map(c => c.start)) : 8 * 60;
+    const maxEnd = courseMinutes.length ? Math.max(...courseMinutes.map(c => c.end)) : 18 * 60;
+    const S = Math.min(8, Math.floor(minStart / 60));
+    const E = Math.max(18, Math.ceil(maxEnd / 60));
+    const TOT = (E - S) * 60;
+    const H = TOT * PPM;
     const toPx = (m) => (m - S * 60) * PPM;
     const fmt = (h, m) => {
       const p = h >= 12 ? 'pm' : 'am';

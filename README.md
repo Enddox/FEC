@@ -35,13 +35,13 @@ También exporta helpers como `FEC_GET_COURSE_BY_FILENAME` y `FEC_GET_COURSE_LIN
 - `index.html`: carga noticias dinámicas desde `FEC_DATA.news` y muestra los accesos a materias disponibles.
 - `horario.html`: dibuja el horario desde `FEC_DATA.schedule` y enlaza cada materia usando `FEC_DATA.courses`.
 - `profesores.html`: muestra la lista de profesores desde `FEC_DATA.professors`.
-- `calculoi.html`: muestra actividades y material desde `FEC_DATA.activities.calc` y `FEC_DATA.courses`.
+- `calculoi.html`: muestra el contenido de curso y una sección de actividades en la barra lateral; por defecto no hay tareas asignadas a menos que se agreguen en `FEC_DATA.activities.calc`.
 - `comunicacion.html`: muestra actividades y material desde `FEC_DATA.activities.comu` y `FEC_DATA.courses`.
-- `algoritmos.html`: muestra actividades y material desde `FEC_DATA.activities.algo` y `FEC_DATA.courses`.
-- `logicamatematica.html`: muestra actividades y material desde `FEC_DATA.activities.logi` y `FEC_DATA.courses`.
-- `orientacion.html`: muestra actividades y material desde `FEC_DATA.activities.orie` y `FEC_DATA.courses`.
-- `ppi.html`: muestra actividades y material desde `FEC_DATA.activities.ppi` y `FEC_DATA.courses`.
-- `grupos.html`: página de enlaces a grupos y recursos del curso (no depende directamente de `FEC_DATA`).
+- `algoritmos.html`: muestra el contenido de curso y la barra lateral de actividades; por defecto no hay tareas hasta que se agreguen en `FEC_DATA.activities.algo`.
+- `logicamatematica.html`: muestra el contenido de curso y la barra lateral de actividades; por defecto no hay tareas hasta que se agreguen en `FEC_DATA.activities.logi`.
+- `orientacion.html`: muestra el contenido de curso y la barra lateral de actividades; por defecto no hay tareas hasta que se agreguen en `FEC_DATA.activities.orie`.
+- `ppi.html`: muestra el contenido de curso y la barra lateral de actividades; por defecto no hay tareas hasta que se agreguen en `FEC_DATA.activities.ppi`.
+- `grupos.html`: página de enlaces a grupos y recursos del curso. Los grupos ya no se añaden en las páginas de materia.
 
 ## Cómo editar datos
 
@@ -80,14 +80,14 @@ Ejemplo:
   name: 'Algoritmos y Programacion I',
   pageTitle: 'Algoritmos y Programacion I - I-2026',
   modalidad: 'Presencial',
-  profesor: 'Dr. José Alvarez',
+  profesor: '',
   classroomCode: 'algo123',
   classroomUrl: 'https://classroom.google.com',
-  zoomId: '######',
-  zoomPass: '######',
   zoomUrl: 'https://zoom.us/join',
-  whatsappUrl: 'https://chat.whatsapp.com/examplealgo',
-  groupLabel: 'Grupo de WhatsApp'
+  meetingLinks: [
+    { title: 'Google Meet', url: 'https://meet.google.com/abc-defg-hij' },
+    { title: 'Discord', url: 'https://discord.gg/ejemplo' }
+  ]
 }
 ```
 
@@ -118,7 +118,7 @@ material: {
 1. Abre `data/site-data.js`.
 2. Busca `FEC_DATA.activities`.
 3. Modifica o agrega tareas dentro del array del curso correspondiente.
-
+> Atención: por defecto solo `FEC_DATA.activities.comu` contiene tareas. Las demás materias no tienen actividades hasta que las agregues aquí.
 Ejemplo:
 
 ```js
@@ -171,6 +171,18 @@ En `data/site-data.js`, dentro de `FEC_DATA.activities.<codigo>` agrega nuevos o
 2. Agrega una entrada en `FEC_DATA.nav.subjects` si quieres que aparezca en la navegación.
 3. Crea la página `.html` nueva con la misma estructura de las páginas de materia.
 4. Si también hay horario, agrega una entrada a `FEC_DATA.schedule`.
+5. Si quieres un módulo adicional de reunión como Google Meet o Discord, agrega `meetingLinks` al curso:
+
+```js
+meetingLinks: [
+  { title: 'Google Meet', url: 'https://meet.google.com/abc-defg-hij' },
+  { title: 'Discord', url: 'https://discord.gg/ejemplo' }
+]
+```
+
+### ¿Por qué no hay grupos en las páginas de materia?
+Los grupos de comunicación, WhatsApp o Telegram deben ir en `grupos.html`.
+No deben añadirse en los objetos de curso de `data/site-data.js`.
 
 ### ¿Qué pasa si la página de materia no existe?
 La navegación puede mostrar un enlace roto si `filename` no existe. Siempre crea el archivo `filename` que declares en el objeto del curso.

@@ -33,9 +33,7 @@ window.FEC_DATA = {
       classroomUrl: 'https://classroom.google.com',
       zoomId: '86303507525',
       zoomPass: '4ua8xi',
-      zoomUrl: 'https://zoom.us/join',
-      whatsappUrl: 'https://chat.whatsapp.com/I6s368JjVsv5eWfm4rXhM3?mode=gi_t',
-      groupLabel: 'Grupo de WhatsApp'
+      zoomUrl: 'https://zoom.us/join'
     },
     {
       ck: 'comu',
@@ -49,8 +47,6 @@ window.FEC_DATA = {
       zoomId: '###########',
       zoomPass: '######',
       zoomUrl: 'https://zoom.us/join',
-      whatsappUrl: 'https://chat.whatsapp.com/DZBTbi2rdvkAww3Iy4US5C?mode=gi_t',
-      groupLabel: 'Grupo de WhatsApp',
       material: {
         title: 'Manual de Lenguaje y Comunicacion (PDF)',
         desc: 'Material base del semestre.',
@@ -63,14 +59,10 @@ window.FEC_DATA = {
       name: 'Algoritmos y Programacion I',
       pageTitle: 'Algoritmos y Programacion I - I-2026',
       modalidad: 'Presencial',
-      profesor: 'Dr. José Alvarez',
+      profesor: '',
       classroomCode: 'algo123',
       classroomUrl: 'https://classroom.google.com',
-      zoomId: '######',
-      zoomPass: '######',
-      zoomUrl: 'https://zoom.us/join',
-      whatsappUrl: 'https://chat.whatsapp.com/examplealgo',
-      groupLabel: 'Grupo de WhatsApp'
+      zoomUrl: 'https://zoom.us/join'
     },
     {
       ck: 'logi',
@@ -78,14 +70,10 @@ window.FEC_DATA = {
       name: 'Logica Matematica',
       pageTitle: 'Logica Matematica - I-2026',
       modalidad: 'Online',
-      profesor: 'Dra. Marta Salazar',
+      profesor: '',
       classroomCode: 'logi987',
       classroomUrl: 'https://classroom.google.com',
-      zoomId: '######',
-      zoomPass: '######',
-      zoomUrl: 'https://zoom.us/join',
-      whatsappUrl: 'https://chat.whatsapp.com/examplelogi',
-      groupLabel: 'Grupo de WhatsApp'
+      zoomUrl: 'https://zoom.us/join'
     },
     {
       ck: 'orie',
@@ -93,14 +81,10 @@ window.FEC_DATA = {
       name: 'Orientacion I',
       pageTitle: 'Orientacion I - I-2026',
       modalidad: 'Online',
-      profesor: 'Prof. Juan Hernandez',
+      profesor: '',
       classroomCode: 'orie456',
       classroomUrl: 'https://classroom.google.com',
-      zoomId: '######',
-      zoomPass: '######',
-      zoomUrl: 'https://zoom.us/join',
-      whatsappUrl: 'https://chat.whatsapp.com/exampleorie',
-      groupLabel: 'Grupo de WhatsApp'
+      zoomUrl: 'https://zoom.us/join'
     },
     {
       ck: 'ppi',
@@ -108,14 +92,10 @@ window.FEC_DATA = {
       name: 'PPI',
       pageTitle: 'PPI - I-2026',
       modalidad: 'Online',
-      profesor: 'Lic. Ana Torres',
+      profesor: '',
       classroomCode: 'ppi321',
       classroomUrl: 'https://classroom.google.com',
-      zoomId: '######',
-      zoomPass: '######',
-      zoomUrl: 'https://zoom.us/join',
-      whatsappUrl: 'https://chat.whatsapp.com/exampleppi',
-      groupLabel: 'Grupo de WhatsApp'
+      zoomUrl: 'https://zoom.us/join'
     }
   ],
   schedule: [
@@ -147,86 +127,6 @@ window.FEC_DATA = {
         type: 'tarea',
         title: 'Investigacion de Autores',
         desc: 'Elaborar una breve reseña sobre la trayectoria y los aportes a la lingüística de Ferdinand de Saussure, Lev Vygotsky y Noam Chomsky. (Realizar en cuaderno).',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      }
-    ],
-    calc: [
-      {
-        type: 'tarea',
-        title: 'Ejercicios de límites',
-        desc: 'Resuelve los ejercicios de límite del capítulo 2 del manual y escribe los pasos en el cuaderno.',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      },
-      {
-        type: 'tarea',
-        title: 'Problemas de derivadas',
-        desc: 'Calcula derivadas de polinomios y funciones trigonométricas, y entrega las respuestas ordenadas.',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      }
-    ],
-    algo: [
-      {
-        type: 'tarea',
-        title: 'Pseudocódigo y diagramas de flujo',
-        desc: 'Escribe el pseudocódigo y el diagrama de flujo para el algoritmo de búsqueda lineal.',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      },
-      {
-        type: 'tarea',
-        title: 'Estructura de datos básica',
-        desc: 'Investiga y describe en cuaderno las diferencias entre arreglos y listas enlazadas.',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      }
-    ],
-    logi: [
-      {
-        type: 'tarea',
-        title: 'Tablas de verdad',
-        desc: 'Realiza tablas de verdad para las proposiciones compuestas del ejercicio 4 del manual.',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      },
-      {
-        type: 'tarea',
-        title: 'Equivalencias lógicas',
-        desc: 'Transforma las proposiciones dadas a su forma equivalente usando leyes de Morgan.',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      }
-    ],
-    orie: [
-      {
-        type: 'tarea',
-        title: 'Plan de aprendizaje',
-        desc: 'Redacta tu objetivo académico para el semestre y las estrategias para alcanzarlo.',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      },
-      {
-        type: 'tarea',
-        title: 'Autoconocimiento',
-        desc: 'Contesta el cuestionario de habilidades personales y reflexiona sobre tus resultados.',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      }
-    ],
-    ppi: [
-      {
-        type: 'tarea',
-        title: 'Idea de proyecto',
-        desc: 'Propón una idea de proyecto y describe el problema que busca resolver.',
-        assigned: '13 abril 2026',
-        due: '19 abril 2026'
-      },
-      {
-        type: 'tarea',
-        title: 'Reunión de equipo',
-        desc: 'Organiza una breve agenda para la primera reunión de trabajo en equipo.',
         assigned: '13 abril 2026',
         due: '19 abril 2026'
       }

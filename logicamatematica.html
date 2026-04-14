@@ -66,7 +66,7 @@
               </div>
               <div class="info-card glow-box">
                 <div class="info-label">Profesor/a</div>
-                <div class="info-value">${course.profesor}</div>
+                <div class="info-value">${course.profesor || 'Por asignar'}</div>
               </div>
             </div>
             <div class="section-label glow-dim">[ Google Classroom ]</div>
@@ -96,12 +96,12 @@
                 <button class="copy-btn" onclick="copyCode('${course.zoomPass}', this)">Clave</button>
               </div>
             </div>
-            <div class="section-label glow-dim">[ Grupos ]</div>
-            <div class="info-card glow-box mb-4">
-              <a href="${course.whatsappUrl}" target="_blank" class="link-btn link-classroom" style="border-color:rgba(37,211,102,0.3);color:#25d366;background:rgba(37,211,102,0.06)">
-                ${course.groupLabel}
-              </a>
+            ${course.meetingLinks && course.meetingLinks.length ? `
+            <div class="section-label glow-dim">[ Enlaces de reunión ]</div>
+            <div class="info-card glow-box mb-5">
+              ${course.meetingLinks.map(link => `<a href="${link.url}" target="_blank" class="link-btn link-zoom">${link.title}</a>`).join('')}
             </div>
+            ` : ''}
             ${course.material ? `
             <div class="section-label glow-dim">[ Material del Semestre ]</div>
             <div class="info-card glow-box mb-4">

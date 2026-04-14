@@ -31,7 +31,7 @@
       <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-1">CALCULO I</h1>
       <p class="text-[11px] mb-5 glow-dim" style="color:rgba(0,255,65,0.4)">1er. Semestre &mdash; Seccion 2 &mdash; I-2026</p>
 
-      <div class="grid grid-cols-1 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-5">
         <div>
           <div class="section-label glow-dim">[ Datos Generales ]</div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
@@ -83,21 +83,14 @@
               </button>
             </div>
           </div>
-
-          <div class="section-label glow-dim">[ Grupos ]</div>
-          <div class="info-card glow-box mb-4">
-            <a href="https://chat.whatsapp.com/I6s368JjVsv5eWfm4rXhM3?mode=gi_t" target="_blank" class="link-btn link-classroom" style="border-color:rgba(37,211,102,0.3);color:#25d366;background:rgba(37,211,102,0.06)">
-              <i class="fa-brands fa-whatsapp" style="font-size:12px"></i>
-              Grupo de WhatsApp
-            </a>
-          </div>
+          <div id="meeting-links"></div>
         </div>
-      </div>
 
-      <aside>
-        <div class="section-label glow-dim">[ Actividades ]</div>
-        <div id="calc-activities" class="border border-[rgba(0,255,65,0.08)] rounded-md p-3 glow-box sidebar-scroll" style="background:rgba(0,255,65,0.01)"></div>
-      </aside>
+        <aside>
+          <div class="section-label glow-dim">[ Actividades ]</div>
+          <div id="calc-activities" class="border border-[rgba(0,255,65,0.08)] rounded-md p-3 glow-box sidebar-scroll" style="background:rgba(0,255,65,0.01)"></div>
+        </aside>
+      </div>
 
       <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
 
@@ -107,17 +100,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script>
     function copyCode(text, btn) {
-      navigator.clipboard.writeText(text).then(() => {
-        const orig = btn.innerHTML;
-        btn.classList.add('copied');
-        btn.innerHTML = '<i class="fa-solid fa-check" style="font-size:9px"></i> Copiado';
-        setTimeout(() => {
-          btn.classList.remove('copied');
-          btn.innerHTML = orig;
-        }, 1500);
-      });
-    }
-    function renderCalcActivities() {
       const container = document.getElementById('calc-activities');
       if (!container || !window.FEC_DATA) return;
       const activities = window.FEC_DATA.activities.calc || [];
@@ -142,6 +124,19 @@
       });
     }
     renderCalcActivities();
+    renderMeetingLinks('calculoi.html', 'meeting-links');
+
+    function renderMeetingLinks(filename, containerId) {
+      const course = window.FEC_GET_COURSE_BY_FILENAME(filename);
+      const container = document.getElementById(containerId);
+      if (!container || !course || !course.meetingLinks || !course.meetingLinks.length) return;
+      container.innerHTML = `
+        <div class="section-label glow-dim">[ Enlaces de reunión ]</div>
+        <div class="info-card glow-box mb-5">
+          ${course.meetingLinks.map(link => `<a href="${link.url}" target="_blank" class="link-btn link-zoom">${link.title}</a>`).join('')}
+        </div>
+      `;
+    }
   </script>
 </body>
 </html>

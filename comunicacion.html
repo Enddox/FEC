@@ -79,14 +79,7 @@
               </button>
             </div>
           </div>
-
-          <div class="section-label glow-dim">[ Grupo ]</div>
-          <div class="info-card glow-box mb-5">
-            <a href="https://chat.whatsapp.com/DZBTbi2rdvkAww3Iy4US5C?mode=gi_t" target="_blank" class="link-btn link-wa">
-              <i class="fa-brands fa-whatsapp" style="font-size:12px"></i>
-              Grupo de WhatsApp
-            </a>
-          </div>
+          <div id="meeting-links"></div>
 
           <div class="section-label glow-dim">[ Material del Semestre ]</div>
           <div class="info-card glow-box mb-4">
@@ -158,7 +151,19 @@
       }
     }
     renderComunicacionActivities();
+    renderMeetingLinks('comunicacion.html', 'meeting-links');
+
+    function renderMeetingLinks(filename, containerId) {
+      const course = window.FEC_GET_COURSE_BY_FILENAME(filename);
+      const container = document.getElementById(containerId);
+      if (!container || !course || !course.meetingLinks || !course.meetingLinks.length) return;
+      container.innerHTML = `
+        <div class="section-label glow-dim">[ Enlaces de reunión ]</div>
+        <div class="info-card glow-box mb-5">
+          ${course.meetingLinks.map(link => `<a href="${link.url}" target="_blank" class="link-btn link-zoom">${link.title}</a>`).join('')}
+        </div>
+      `;
+    }
   </script>
 </body>
-</html>
 </html>

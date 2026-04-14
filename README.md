@@ -2,218 +2,199 @@
 
 ## Descripción
 
-Este proyecto es una mini página de información académica para la sección I-2026 de la Licenciatura en Computación. El sitio usa una arquitectura modular de datos para que puedas editar horarios, materias, actividades, profesores y noticias desde un único archivo de datos.
+Repositorio estático con un frontend de datos modulares para un sitio académico. El diseño separa datos, templates y estilos para que las páginas de materia funcionen leyendo un único objeto global: `window.FEC_DATA`.
 
 ## Estructura del proyecto
 
-- `index.html`: página de inicio con noticias y acceso rápido a materias.
-- `horario.html`: horario semanal generado desde datos centrales.
-- `profesores.html`: listado de profesores.
-- `grupos.html`: enlaces a grupos y recursos del curso.
-- `calculoi.html`, `comunicacion.html`, `algoritmos.html`, `logicamatematica.html`, `orientacion.html`, `ppi.html`: páginas de materia con actividades, material y datos de clase.
-- `data/site-data.js`: fuente de datos central.
-- `styles.css`: estilos compartidos del sitio.
+- `index.html`: inicio y acceso a materias.
+- `horario.html`: renderiza el horario desde datos.
+- `profesores.html`: lista de profesores desde datos.
+- `grupos.html`: página de enlaces a grupos y recursos.
+- `calculoi.html`, `comunicacion.html`, `algoritmos.html`, `logicamatematica.html`, `orientacion.html`, `ppi.html`: templates de materia basadas en datos.
+- `data/site-data.js`: modelo de datos central.
+- `styles.css`: estilos compartidos.
 
-## Arquitectura modular
+## Arquitectura de datos
 
-Los datos compartidos están centralizados en `data/site-data.js`.
+`data/site-data.js` define `window.FEC_DATA` y contiene:
 
-Ese archivo define `window.FEC_DATA` y contiene:
+- `site`: metadatos del sitio.
+- `nav`: navegación principal y materias.
+- `courses`: configuración de cada curso.
+- `schedule`: entradas del horario semanal.
+- `professors`: listado de docentes.
+- `activities`: actividades por curso.
+- `news`: noticias del inicio.
 
-- `site`: datos generales del sitio
-- `nav`: navegación principal y materias disponibles
-- `courses`: lista de cursos y enlaces de páginas
-- `schedule`: horario semanal con tiempos y enlaces automáticos
-- `professors`: lista de profesores y cursos
-- `activities`: actividades por curso
-- `news`: noticias y comunicados que se muestran en `index.html`
+También expone helpers usados por las páginas:
 
-También exporta helpers como `FEC_GET_COURSE_BY_FILENAME` y `FEC_GET_COURSE_LINKS` usados por las páginas.
+- `FEC_GET_COURSE_BY_FILENAME(filename)`
+- `FEC_GET_COURSE_LINKS()`
 
-## Qué archivos alimenta
+## Cómo se vinculan datos y páginas
 
-- `index.html`: carga noticias dinámicas desde `FEC_DATA.news` y muestra los accesos a materias disponibles.
-- `horario.html`: dibuja el horario desde `FEC_DATA.schedule` y enlaza cada materia usando `FEC_DATA.courses`.
-- `profesores.html`: muestra la lista de profesores desde `FEC_DATA.professors`.
-- `calculoi.html`: muestra el contenido de curso y una sección de actividades en la barra lateral; por defecto no hay tareas asignadas a menos que se agreguen en `FEC_DATA.activities.calc`.
-- `comunicacion.html`: muestra actividades y material desde `FEC_DATA.activities.comu` y `FEC_DATA.courses`.
-- `algoritmos.html`: muestra el contenido de curso y la barra lateral de actividades; por defecto no hay tareas hasta que se agreguen en `FEC_DATA.activities.algo`.
-- `logicamatematica.html`: muestra el contenido de curso y la barra lateral de actividades; por defecto no hay tareas hasta que se agreguen en `FEC_DATA.activities.logi`.
-- `orientacion.html`: muestra el contenido de curso y la barra lateral de actividades; por defecto no hay tareas hasta que se agreguen en `FEC_DATA.activities.orie`.
-- `ppi.html`: muestra el contenido de curso y la barra lateral de actividades; por defecto no hay tareas hasta que se agreguen en `FEC_DATA.activities.ppi`.
-- `grupos.html`: página de enlaces a grupos y recursos del curso. Los grupos ya no se añaden en las páginas de materia.
+- `index.html` consume `FEC_DATA.news` y `FEC_DATA.nav.subjects`.
+- `horario.html` consume `FEC_DATA.schedule` y resuelve `ck` con `FEC_DATA.courses`.
+- `profesores.html` consume `FEC_DATA.professors`.
+- Cada página de materia carga su curso a partir de `window.FEC_GET_COURSE_BY_FILENAME(filename)`.
+- Las páginas de materia renderizan:
+  - datos del curso desde `FEC_DATA.courses`
+  - material desde `course.material`
+  - enlaces de reunión desde `course.meetingLinks`
+  - actividades desde `FEC_DATA.activities[course.ck]`
 
-## Cómo editar datos
-
-### Editar horarios
+## Cómo agregar un nuevo curso/materia
 
 1. Abre `data/site-data.js`.
-2. Busca `FEC_DATA.schedule`.
-3. Modifica o agrega entradas con este formato:
+2. Añade el objeto del curso en `FEC_DATA.courses`.
+3. Añade la materia a `FEC_DATA.nav.subjects` si quieres que aparezca en la navegación.
+4. Crea la página `.html` para el curso con la misma estructura de los templates existentes.
+5. Si el curso tiene horario, añade una entrada a `FEC_DATA.schedule`.
+6. Si quieres actividades, crea el array `FEC_DATA.activities.<ck>`.
+7. Si quieres material, agrega `course.material`.
+8. Si quieres reuniones por Google Meet/Discord, agrega `course.meetingLinks`.
+
+Ejemplo mínimo de curso:
 
 ```js
 {
-  d: 0,         // 0=lunes, 1=martes, 2=miércoles, 3=jueves, 4=viernes
-  sh: 18,       // hora de inicio (24h)
-  sm: 0,        // minuto de inicio
-  eh: 20,       // hora de fin (24h)
-  em: 0,        // minuto de fin
-  ck: 'comu',   // código del curso, enlazará con FEC_DATA.courses
-  tp: 'online'  // tipo de clase
-}
-```
-
-4. Guarda y abre `horario.html` para verificar.
-
-### Agregar o cambiar materias
-
-1. Abre `data/site-data.js`.
-2. Busca `FEC_DATA.courses`.
-3. Añade o edita un objeto de curso.
-
-Ejemplo:
-
-```js
-{
-  ck: 'algo',
-  filename: 'algoritmos.html',
-  name: 'Algoritmos y Programacion I',
-  pageTitle: 'Algoritmos y Programacion I - I-2026',
+  ck: 'nuevo',
+  filename: 'nuevo.html',
+  name: 'Materia Nueva',
+  pageTitle: 'Materia Nueva - I-2026',
   modalidad: 'Presencial',
-  profesor: '',
-  classroomCode: 'algo123',
+  profesor: 'Nombre del docente',
+  classroomCode: '#####',
   classroomUrl: 'https://classroom.google.com',
   zoomUrl: 'https://zoom.us/join',
   meetingLinks: [
-    { title: 'Google Meet', url: 'https://meet.google.com/abc-defg-hij' },
-    { title: 'Discord', url: 'https://discord.gg/ejemplo' }
+    { title: 'Google Meet', url: 'https://meet.google.com/xyz-1234' },
+    { title: 'Discord', url: 'https://discord.gg/abc123' }
   ]
 }
 ```
 
-4. Si agregas un curso nuevo, también debes crear la página `.html` correspondiente con la misma lógica que las demás páginas de materia.
-
-### Agregar material a una materia
-
-1. Abre `data/site-data.js`.
-2. Busca el curso dentro de `FEC_DATA.courses`.
-3. Añade un objeto `material`.
-
-Ejemplo:
+Ejemplo de actividades:
 
 ```js
-material: {
-  title: 'Apuntes de Algoritmos',
-  desc: 'Documento base para el semestre.',
-  url: 'data/algoritmos-apuntes.pdf'
-}
+FEC_DATA.activities.nuevo = [
+  {
+    type: 'tarea',
+    title: 'Ejercicio inicial',
+    desc: 'Completa el primer conjunto de problemas.',
+    assigned: '14 abril 2026',
+    due: '20 abril 2026'
+  }
+];
 ```
 
-4. Guarda y abre la página de la materia (por ejemplo `algoritmos.html`).
+Ejemplo de horario:
 
-> Las páginas de materia muestran el bloque de `Material del Semestre` solo si `course.material` existe.
+```js
+FEC_DATA.schedule.push({
+  d: 2,
+  sh: 10,
+  sm: 0,
+  eh: 12,
+  em: 0,
+  ck: 'nuevo',
+  tp: 'presencial'
+});
+```
 
-### Editar actividades
+## Formato de datos
 
-1. Abre `data/site-data.js`.
-2. Busca `FEC_DATA.activities`.
-3. Modifica o agrega tareas dentro del array del curso correspondiente.
-> Atención: por defecto solo `FEC_DATA.activities.comu` contiene tareas. Las demás materias no tienen actividades hasta que las agregues aquí.
-Ejemplo:
+### Curso (`FEC_DATA.courses`)
+
+Cada curso es un objeto con al menos:
+
+- `ck`: código único.
+- `filename`: nombre de la página HTML.
+- `name`: nombre visible de la materia.
+- `pageTitle`: título de la página.
+- `modalidad`: etiqueta de modalidad.
+- `profesor`: nombre del docente.
+- `classroomCode`, `classroomUrl`: información de Google Classroom.
+- `zoomUrl`: URL de Zoom.
+
+Opcional:
+
+- `material`: `{ title, desc, url }`
+- `meetingLinks`: array de `{ title, url }`
+
+### Horario (`FEC_DATA.schedule`)
+
+Cada entrada usa:
+
+- `d`: día (0..4)
+- `sh`, `sm`: hora y minuto de inicio
+- `eh`, `em`: hora y minuto de fin
+- `ck`: código de curso
+- `tp`: tipo de clase
+
+### Actividades (`FEC_DATA.activities`)
+
+Cada clave es un curso y cada valor es un array de actividades:
 
 ```js
 {
   type: 'tarea',
-  title: 'Nuevo ejercicio',
-  desc: 'Instrucciones de la tarea.',
-  assigned: '13 abril 2026',
-  due: '19 abril 2026',
-  image: 'data/image.png'
+  title: 'Título de la tarea',
+  desc: 'Descripción breve',
+  assigned: 'fecha',
+  due: 'fecha',
+  image: 'ruta/opcional.png'
 }
 ```
 
-4. Guarda y abre la página de la materia.
+## FAQ para desarrolladores
 
-### Editar profesores
+1. ¿Cómo se renderiza una página de curso?
+   - La página lee `window.FEC_DATA` y busca el curso por nombre de archivo con `FEC_GET_COURSE_BY_FILENAME`.
 
-1. Abre `data/site-data.js`.
-2. Busca `FEC_DATA.professors`.
-3. Cambia o agrega entradas como:
+2. ¿Dónde agrego nuevos enlaces de reunión?
+   - En `course.meetingLinks` dentro de `FEC_DATA.courses`.
 
-```js
-{ name: 'Eddymar Matheus', course: 'Comunicación y Lenguaje', email: 'eddymar.matheus@universidad.edu' }
-```
+3. ¿Qué pasa si agrego un curso en `FEC_DATA.courses` pero no creo la página HTML?
+   - El enlace en la navegación quedará roto; debes crear el archivo `filename`.
 
-### Editar noticias de inicio
+4. ¿Cómo habilito un nuevo curso en la navegación?
+   - Añade la materia a `FEC_DATA.nav.subjects`.
 
-1. Abre `data/site-data.js`.
-2. Busca `FEC_DATA.news`.
-3. Añade noticias u avisos con este formato:
+5. ¿Cómo agrego actividad a un curso?
+   - Agrega un array en `FEC_DATA.activities.<ck>`.
 
-```js
-{
-  tag: 'comunicado',
-  content: 'Texto del comunicado.',
-  date: '13 abril 2026 — 14:54'
-}
-```
+6. ¿Cómo agrego material descargable?
+   - Usa `course.material` en el objeto de curso.
 
-## Preguntas frecuentes
+7. ¿Cómo pruebo los cambios de datos?
+   - Modifica `data/site-data.js`, guarda y recarga la página en el navegador.
 
-### ¿Dónde agrego material nuevo para una materia?
-En `data/site-data.js` dentro del objeto del curso correspondiente, usando la propiedad `material`.
+8. ¿Cuál es el contrato entre `schedule` y `courses`?
+   - `schedule` usa `ck` para enlazar cada entrada de horario con un curso de `FEC_DATA.courses`.
 
-### ¿Cómo agrego actividades para una materia?
-En `data/site-data.js`, dentro de `FEC_DATA.activities.<codigo>` agrega nuevos objetos de tarea.
+9. ¿Dónde debo colocar la lógica de renderizado?
+   - En cada página HTML está el renderizado de su propia sección; los datos se mantienen en `data/site-data.js`.
 
-### ¿Qué hago si agrego un curso nuevo?
-1. Agrega el curso a `FEC_DATA.courses`.
-2. Agrega una entrada en `FEC_DATA.nav.subjects` si quieres que aparezca en la navegación.
-3. Crea la página `.html` nueva con la misma estructura de las páginas de materia.
-4. Si también hay horario, agrega una entrada a `FEC_DATA.schedule`.
-5. Si quieres un módulo adicional de reunión como Google Meet o Discord, agrega `meetingLinks` al curso:
-
-```js
-meetingLinks: [
-  { title: 'Google Meet', url: 'https://meet.google.com/abc-defg-hij' },
-  { title: 'Discord', url: 'https://discord.gg/ejemplo' }
-]
-```
-
-### ¿Por qué no hay grupos en las páginas de materia?
-Los grupos de comunicación, WhatsApp o Telegram deben ir en `grupos.html`.
-No deben añadirse en los objetos de curso de `data/site-data.js`.
-
-### ¿Qué pasa si la página de materia no existe?
-La navegación puede mostrar un enlace roto si `filename` no existe. Siempre crea el archivo `filename` que declares en el objeto del curso.
-
-### ¿Por qué algunas páginas se actualizan al cambiar solo `data/site-data.js`?
-Porque las páginas de materia leen sus datos desde `window.FEC_DATA`. Si cambias el contenido en `data/site-data.js` y recargas, las páginas usarán los nuevos datos.
-
-### ¿Necesito tocar `styles.css`?
-No para el contenido y los datos. Solo edítalo si quieres cambiar la apariencia visual del sitio.
-
-### ¿Qué hace `grupos.html`?
-Es una página de enlaces y recursos que no depende directamente de `FEC_DATA`.
+10. ¿Cómo añado un nuevo módulo de datos o columna a la página?
+    - Extiende el objeto `course` en `FEC_DATA.courses`, luego actualiza el template HTML correspondiente.
 
 ## Desarrollo y pruebas
 
-1. Guarda los cambios en `data/site-data.js`.
-2. Abre la página correspondiente en el navegador.
-3. Si necesitas corregir algo, edita `data/site-data.js` y vuelve a recargar.
+1. Edita `data/site-data.js` para los cambios de datos.
+2. Crea o actualiza la página `.html` del curso si agregas uno nuevo.
+3. Abre la página en el navegador y revisa el comportamiento.
 
 ## Commit y push
 
-Cuando termines los cambios, usa:
-
 ```bash
 git add data/site-data.js README.md index.html horario.html profesores.html comunicacion.html calculoi.html algoritmos.html logicamatematica.html orientacion.html ppi.html
-git commit -m "Actualiza README y documenta el flujo de datos para todas las materias"
+git commit -m "Refactor README para enfoque de desarrollador y agregar guía para nuevos cursos"
 git push
 ```
 
-## Nota importante
+## Nota técnica
 
-- `data/site-data.js` es el punto central para datos compartidos.
-- Mantén la ruta `data/site-data.js` y no muevas el archivo.
-- Si añades cursos nuevos, también debes proporcionar las páginas HTML que les correspondan.
+- `data/site-data.js` es el modelo central.
+- Las páginas HTML son vistas que consumen ese modelo.
+- No dupliques datos entre archivos HTML y `data/site-data.js`.

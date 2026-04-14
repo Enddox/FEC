@@ -47,38 +47,7 @@
           </nav>
 
           <div class="section-label glow-dim">[ Materias ]</div>
-          <nav class="flex flex-col gap-2 mb-4">
-            <a href="calculoi.html" class="nav-item glow-box">
-              <span class="text-sm font-semibold glow">Calculo I</span>
-              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">calculoi.html</span>
-              <span class="arrow text-sm">&rarr;</span>
-            </a>
-            <a href="algoritmos.html" class="nav-item disabled glow-box">
-              <span class="text-sm font-semibold">Algoritmos y Programacion I</span>
-              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">algoritmos.html</span>
-              <span class="arrow text-sm">&rarr;</span>
-            </a>
-            <a href="logicamatematica.html" class="nav-item disabled glow-box">
-              <span class="text-sm font-semibold">Logica Matematica</span>
-              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">logicamatematica.html</span>
-              <span class="arrow text-sm">&rarr;</span>
-            </a>
-            <a href="comunicacion.html" class="nav-item glow-box">
-              <span class="text-sm font-semibold glow">Sub-Area Comunicacion</span>
-              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">comunicacion.html</span>
-              <span class="arrow text-sm">&rarr;</span>
-            </a>
-            <a href="orientacion.html" class="nav-item disabled glow-box">
-              <span class="text-sm font-semibold">Orientacion I</span>
-              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">orientacion.html</span>
-              <span class="arrow text-sm">&rarr;</span>
-            </a>
-            <a href="ppi.html" class="nav-item disabled glow-box">
-              <span class="text-sm font-semibold">PPI</span>
-              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">ppi.html</span>
-              <span class="arrow text-sm">&rarr;</span>
-            </a>
-          </nav>
+          <nav id="subject-nav" class="flex flex-col gap-2 mb-4"></nav>
 
           <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
         </div>
@@ -109,7 +78,26 @@
         container.appendChild(newsItem);
       });
     }
+    function renderSubjectNav() {
+      const container = document.getElementById('subject-nav');
+      if (!window.FEC_DATA || !container) return;
+      container.innerHTML = '';
+      window.FEC_DATA.nav.subjects.forEach((sub) => {
+        const link = document.createElement('a');
+        const enabled = sub.enabled !== false;
+        link.className = 'nav-item glow-box' + (enabled ? '' : ' disabled');
+        link.href = enabled ? sub.href : '#';
+        if (!enabled) link.addEventListener('click', (e) => e.preventDefault());
+        link.innerHTML = `
+          <span class="text-sm font-semibold${enabled ? ' glow' : ''}">${sub.title}</span>
+          <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">${sub.href}</span>
+          <span class="arrow text-sm">&rarr;</span>
+        `;
+        container.appendChild(link);
+      });
+    }
     renderIndexNews();
+    renderSubjectNav();
   </script>
 </body>
 </html>

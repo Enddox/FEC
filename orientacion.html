@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orientacion - I-2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
+    }
+  </script>
+  <script src="data/site-data.js"></script>
+</head>
+<body class="p-4 md:p-8 flex items-start justify-center">
+  <div class="crt w-full max-w-4xl">
+    <div class="screen">
+      <a href="index.html" class="back-link glow-dim">&larr; ../inicio</a>
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">sys@universidad</span>
+        <span class="text-[10px]" style="color:rgba(0,255,65,0.2)">~</span>
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">materia_query</span>
+      </div>
+      <p class="text-xs mb-4 glow-dim" style="color:rgba(0,255,65,0.35)" id="course-file">$ cat /materias/orientacion.dat</p>
+      <div id="course-content"></div>
+    </div>
+  </div>
+  <script>
+    function copyCode(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fa-solid fa-check" style="font-size:9px"></i> Copiado';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = orig;
+        }, 1500);
+      });
+    }
+
+    function renderCoursePage() {
+      const filename = window.location.pathname.split('/').pop();
+      const course = window.FEC_GET_COURSE_BY_FILENAME(filename);
+      const content = document.getElementById('course-content');
+      if (!course) {
+        content.innerHTML = '<div class="info-card glow-box"><p class="text-sm">Curso no encontrado.</p></div>';
+        return;
+      }
+      document.title = course.pageTitle;
+      content.innerHTML = `
+        <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-1">${course.name}</h1>
+        <p class="text-[11px] mb-5 glow-dim" style="color:rgba(0,255,65,0.4)">${window.FEC_DATA.site.semester} — ${window.FEC_DATA.site.section} — ${window.FEC_DATA.site.period}</p>
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-5">
+          <div>
+            <div class="section-label glow-dim">[ Datos Generales ]</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
+              <div class="info-card glow-box">
+                <div class="info-label">Materia</div>
+                <div class="info-value">${course.name}</div>
+              </div>
+              <div class="info-card glow-box">
+                <div class="info-label">Modalidad</div>
+                <div class="info-value">${course.modalidad}</div>
+              </div>
+              <div class="info-card glow-box">
+                <div class="info-label">Profesor/a</div>
+                <div class="info-value">${course.profesor}</div>
+              </div>
+            </div>
+            <div class="section-label glow-dim">[ Google Classroom ]</div>
+            <div class="info-card glow-box mb-5">
+              <div class="info-label">Codigo de acceso</div>
+              <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">${course.classroomCode}</div>
+              <div class="flex items-center gap-2 mt-3">
+                <a href="${course.classroomUrl}" target="_blank" class="link-btn link-classroom">
+                  Abrir Classroom
+                </a>
+                <button class="copy-btn" onclick="copyCode('${course.classroomCode}', this)">
+                  Copiar
+                </button>
+              </div>
+            </div>
+            <div class="section-label glow-dim">[ Zoom ]</div>
+            <div class="info-card glow-box mb-5">
+              <div class="info-label">ID de la sala</div>
+              <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.1em">${course.zoomId}</div>
+              <div class="info-label mt-3">Codigo de acceso</div>
+              <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">${course.zoomPass}</div>
+              <div class="flex items-center gap-2 mt-3">
+                <a href="${course.zoomUrl}" target="_blank" class="link-btn link-zoom">
+                  Unirse a Zoom
+                </a>
+                <button class="copy-btn" onclick="copyCode('${course.zoomId}', this)">ID</button>
+                <button class="copy-btn" onclick="copyCode('${course.zoomPass}', this)">Clave</button>
+              </div>
+            </div>
+            <div class="section-label glow-dim">[ Grupos ]</div>
+            <div class="info-card glow-box mb-4">
+              <a href="${course.whatsappUrl}" target="_blank" class="link-btn link-classroom" style="border-color:rgba(37,211,102,0.3);color:#25d366;background:rgba(37,211,102,0.06)">
+                ${course.groupLabel}
+              </a>
+            </div>
+            ${course.material ? `
+            <div class="section-label glow-dim">[ Material del Semestre ]</div>
+            <div class="info-card glow-box mb-4">
+              <span class="activity-tag tag-material">material</span>
+              <p class="text-[11px] font-semibold" style="color:rgba(0,255,65,.7)">${course.material.title}</p>
+              <p class="text-[9px] mt-1" style="color:rgba(0,255,65,.35)">${course.material.desc}</p>
+              <a href="${course.material.url}" target="_blank" class="link-dl">Descargar material</a>
+            </div>
+            ` : ''}
+            <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,.3)">$ _</p>
+          </div>
+          <aside>
+            <div class="section-label glow-dim">[ Actividades ]</div>
+            <div id="course-activities" class="border border-[rgba(0,255,65,0.08)] rounded-md p-3 glow-box sidebar-scroll" style="background:rgba(0,255,65,0.01)"></div>
+          </aside>
+        </div>
+      `;
+      const activityContainer = document.getElementById('course-activities');
+      const activities = window.FEC_DATA.activities[course.ck] || [];
+      if (!activities.length) {
+        activityContainer.innerHTML = '<div class="activity-card glow-box" style="opacity:.5"><p class="text-[10px]">No hay actividades registradas</p></div>';
+      } else {
+        activities.forEach((item) => {
+          const card = document.createElement('div');
+          card.className = 'activity-card glow-box mb-3';
+          card.innerHTML = `
+            <span class="activity-tag">${item.type}</span>
+            <p class="activity-title">${item.title}</p>
+            <p class="activity-desc">${item.desc}</p>
+            ${item.image ? `<div class="mt-4 overflow-hidden rounded-md border border-[rgba(0,255,65,.08)] bg-[#050505]"><img src="${item.image}" alt="Actividad" class="w-full object-cover" /></div>` : ''}
+            <div class="date-row">
+              <div>
+                <div class="date-label">Asignada</div>
+                <div class="date-val">${item.assigned}</div>
+              </div>
+              <div>
+                <div class="date-label">Entrega</div>
+                <div class="date-val">${item.due}</div>
+              </div>
+            </div>
+          `;
+          activityContainer.appendChild(card);
+        });
+      }
+    }
+    renderCoursePage();
+  </script>
+</body>
+</html>

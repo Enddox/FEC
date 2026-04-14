@@ -25,7 +25,12 @@ Ese archivo define `window.FEC_DATA` y contiene:
 - `index.html`: carga noticias dinámicas desde `FEC_DATA.news`
 - `horario.html`: dibuja el horario desde `FEC_DATA.schedule` y enlaza cada materia usando `FEC_DATA.courses`
 - `profesores.html`: muestra la lista de profesores desde `FEC_DATA.professors`
+- `calculoi.html`: muestra actividades desde `FEC_DATA.activities.calc`
 - `comunicacion.html`: muestra actividades desde `FEC_DATA.activities.comu`
+- `algoritmos.html`: muestra actividades desde `FEC_DATA.activities.algo`
+- `logicamatematica.html`: muestra actividades desde `FEC_DATA.activities.logi`
+- `orientacion.html`: muestra actividades desde `FEC_DATA.activities.orie`
+- `ppi.html`: muestra actividades desde `FEC_DATA.activities.ppi`
 
 ## Cómo editar datos
 

@@ -12,6 +12,7 @@
       theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
     }
   </script>
+  <script src="data/site-data.js"></script>
 </head>
 <body class="p-4 md:p-8 flex items-start justify-center">
   <div class="crt w-full max-w-4xl">
@@ -93,6 +94,11 @@
         </div>
       </div>
 
+      <aside>
+        <div class="section-label glow-dim">[ Actividades ]</div>
+        <div id="calc-activities" class="border border-[rgba(0,255,65,0.08)] rounded-md p-3 glow-box sidebar-scroll" style="background:rgba(0,255,65,0.01)"></div>
+      </aside>
+
       <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
 
     </div>
@@ -111,6 +117,31 @@
         }, 1500);
       });
     }
+    function renderCalcActivities() {
+      const container = document.getElementById('calc-activities');
+      if (!container || !window.FEC_DATA) return;
+      const activities = window.FEC_DATA.activities.calc || [];
+      container.innerHTML = '';
+      if (!activities.length) {
+        container.innerHTML = '<div class="activity-card glow-box" style="opacity:.5"><p class="text-[10px]">No hay actividades registradas</p></div>';
+        return;
+      }
+      activities.forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'activity-card glow-box mb-3';
+        card.innerHTML = `
+          <span class="activity-tag">${item.type}</span>
+          <p class="activity-title">${item.title}</p>
+          <p class="activity-desc">${item.desc}</p>
+          <div class="activity-meta">
+            <span>Asignada: ${item.assigned}</span>
+            <span>Entrega: ${item.due}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+    renderCalcActivities();
   </script>
 </body>
 </html>

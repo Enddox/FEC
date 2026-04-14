@@ -14,7 +14,7 @@
   </script>
 </head>
 <body class="p-4 md:p-8 flex items-start justify-center">
-  <div class="crt w-full max-w-2xl">
+  <div class="crt w-full max-w-4xl">
     <div class="screen">
 
       <a href="index.html" class="back-link glow-dim">&larr; ../inicio</a>
@@ -30,83 +30,89 @@
       <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-1">CALCULO I</h1>
       <p class="text-[11px] mb-5 glow-dim" style="color:rgba(0,255,65,0.4)">1er. Semestre &mdash; Seccion 2 &mdash; I-2026</p>
 
-      <div class="section-label glow-dim">[ Datos Generales ]</div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
-        <div class="info-card glow-box">
-          <div class="info-label">Materia</div>
-          <div class="info-value">Calculo I</div>
-        </div>
-        <div class="info-card glow-box">
-          <div class="info-label">Modalidad</div>
-          <div class="info-value">Online</div>
-        </div>
-        <div class="info-card glow-box">
-          <div class="info-label">Profesor/a</div>
-          <div class="info-value">Betsi De Pascal</div>
-        </div>
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-5">
+        <div>
+          <div class="section-label glow-dim">[ Datos Generales ]</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
+            <div class="info-card glow-box">
+              <div class="info-label">Materia</div>
+              <div class="info-value">Calculo I</div>
+            </div>
+            <div class="info-card glow-box">
+              <div class="info-label">Modalidad</div>
+              <div class="info-value">Online</div>
+            </div>
+            <div class="info-card glow-box">
+              <div class="info-label">Profesor/a</div>
+              <div class="info-value">Betsi De Pascal</div>
+            </div>
+          </div>
 
-      <div class="section-label glow-dim">[ Google Classroom ]</div>
-      <div class="info-card glow-box mb-5">
-        <div class="info-label">Codigo de acceso</div>
-        <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">4nmacc2h</div>
-        <div class="flex items-center gap-2 mt-3">
-          <a href="https://classroom.google.com" target="_blank" class="link-btn link-classroom">
-            <i class="fa-brands fa-google" style="font-size:12px"></i>
-            Abrir Classroom
-          </a>
-          <button class="copy-btn" onclick="copyCode('4nmacc2h', this)">
-            <i class="fa-regular fa-copy" style="font-size:9px"></i> Copiar
-          </button>
-        </div>
-      </div>
+          <div class="section-label glow-dim">[ Google Classroom ]</div>
+          <div class="info-card glow-box mb-5">
+            <div class="info-label">Codigo de acceso</div>
+            <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">4nmacc2h</div>
+            <div class="flex items-center gap-2 mt-3">
+              <a href="https://classroom.google.com" target="_blank" class="link-btn link-classroom">
+                <i class="fa-brands fa-google" style="font-size:12px"></i>
+                Abrir Classroom
+              </a>
+              <button class="copy-btn" onclick="copyCode('4nmacc2h', this)">
+                <i class="fa-regular fa-copy" style="font-size:9px"></i> Copiar
+              </button>
+            </div>
+          </div>
 
-      <div class="section-label glow-dim">[ Zoom ]</div>
-      <div class="info-card glow-box mb-5">
-        <div class="info-label">ID de la sala</div>
-        <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.1em">863 0350 7525</div>
-        <div class="info-label mt-3">Codigo de acceso</div>
-        <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">4ua8xi</div>
-        <div class="flex items-center gap-2 mt-3">
-          <a href="https://zoom.us/join" target="_blank" class="link-btn link-zoom">
-            <i class="fa-solid fa-video" style="font-size:11px"></i>
-            Unirse a Zoom
-          </a>
-          <button class="copy-btn" onclick="copyCode('86303507525', this)">
-            <i class="fa-regular fa-copy" style="font-size:9px"></i> ID
-          </button>
-          <button class="copy-btn" onclick="copyCode('4ua8xi', this)">
-            <i class="fa-regular fa-copy" style="font-size:9px"></i> Clave
-          </button>
-        </div>
-      </div>
+          <div class="section-label glow-dim">[ Zoom ]</div>
+          <div class="info-card glow-box mb-5">
+            <div class="info-label">ID de la sala</div>
+            <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.1em">863 0350 7525</div>
+            <div class="info-label mt-3">Codigo de acceso</div>
+            <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">4ua8xi</div>
+            <div class="flex items-center gap-2 mt-3">
+              <a href="https://zoom.us/join" target="_blank" class="link-btn link-zoom">
+                <i class="fa-solid fa-video" style="font-size:11px"></i>
+                Unirse a Zoom
+              </a>
+              <button class="copy-btn" onclick="copyCode('86303507525', this)">
+                <i class="fa-regular fa-copy" style="font-size:9px"></i> ID
+              </button>
+              <button class="copy-btn" onclick="copyCode('4ua8xi', this)">
+                <i class="fa-regular fa-copy" style="font-size:9px"></i> Clave
+              </button>
+            </div>
+          </div>
 
-      <div class="section-label glow-dim">[ Grupos ]</div>
-      <div class="info-card glow-box mb-4">
-        <a href="https://chat.whatsapp.com/I6s368JjVsv5eWfm4rXhM3?mode=gi_t" target="_blank" class="link-btn link-classroom" style="border-color:rgba(37,211,102,0.3);color:#25d366;background:rgba(37,211,102,0.06)">
-          <i class="fa-brands fa-whatsapp" style="font-size:12px"></i>
-          Grupo de WhatsApp
-        </a>
-      </div>
+          <div class="section-label glow-dim">[ Grupos ]</div>
+          <div class="info-card glow-box mb-4">
+            <a href="https://chat.whatsapp.com/I6s368JjVsv5eWfm4rXhM3?mode=gi_t" target="_blank" class="link-btn link-classroom" style="border-color:rgba(37,211,102,0.3);color:#25d366;background:rgba(37,211,102,0.06)">
+              <i class="fa-brands fa-whatsapp" style="font-size:12px"></i>
+              Grupo de WhatsApp
+            </a>
+          </div>
+        </div>
 
-      <div class="section-label glow-dim">[ Actividades ]</div>
-      <div class="activity-card glow-box">
-        <span class="activity-tag">tarea</span>
-        <p class="activity-title">Resolución de límites y continuidad</p>
-        <p class="activity-desc">Estudia el manual del curso y completa los ejercicios de límites de funciones racionales. Anota tus respuestas y lleva el trabajo a la siguiente clase.</p>
-        <div class="activity-meta">
-          <span>Material: Manual del semestre</span>
-          <span>Entrega: Por confirmar</span>
-        </div>
-      </div>
-      <div class="activity-card glow-box">
-        <span class="activity-tag">tarea</span>
-        <p class="activity-title">Problemas de derivadas</p>
-        <p class="activity-desc">Resuelve ejercicios de derivadas de polinomios y funciones trigonométricas usando el manual. No se necesita descarga adicional porque todo está en el material.</p>
-        <div class="activity-meta">
-          <span>Material: Manual en Classroom</span>
-          <span>Entrega: Por confirmar</span>
-        </div>
+        <aside>
+          <div class="section-label glow-dim">[ Actividades ]</div>
+          <div class="activity-card glow-box">
+            <span class="activity-tag">tarea</span>
+            <p class="activity-title">Resolución de límites y continuidad</p>
+            <p class="activity-desc">Estudia el manual del curso y completa los ejercicios de límites de funciones racionales. Anota tus respuestas y lleva el trabajo a la siguiente clase.</p>
+            <div class="activity-meta">
+              <span>Material: Manual del semestre</span>
+              <span>Entrega: Por confirmar</span>
+            </div>
+          </div>
+          <div class="activity-card glow-box">
+            <span class="activity-tag">tarea</span>
+            <p class="activity-title">Problemas de derivadas</p>
+            <p class="activity-desc">Resuelve ejercicios de derivadas de polinomios y funciones trigonométricas usando el manual. No se necesita descarga adicional porque todo está en el material.</p>
+            <div class="activity-meta">
+              <span>Material: Manual en Classroom</span>
+              <span>Entrega: Por confirmar</span>
+            </div>
+          </div>
+        </aside>
       </div>
 
       <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>

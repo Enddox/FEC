@@ -51,6 +51,16 @@
   <script>
     const PPM = 0.95;
     const toMin = (h, m) => h * 60 + m;
+    const COURSES = [
+      { d: 0, sh: 14, sm: 45, eh: 16, em: 45, n: 'Calculo I',                  tp: 'online',     ck: 'calc' },
+      { d: 0, sh: 18, sm: 0,  eh: 20, em: 0,  n: 'Subarea de Comunicacion',     tp: 'online',     ck: 'comu' },
+      { d: 1, sh: 9,  sm: 0,  eh: 11, em: 0,  n: 'Logica Matematica',          tp: 'online',     ck: 'logi' },
+      { d: 2, sh: 8,  sm: 0,  eh: 9,  em: 30, n: 'Algoritmos y Programacion I', tp: 'presencial', ck: 'algo' },
+      { d: 2, sh: 9,  sm: 0,  eh: 11, em: 0,  n: 'Logica Matematica',          tp: 'online',     ck: 'logi' },
+      { d: 3, sh: 8,  sm: 0,  eh: 11, em: 0,  n: 'PPI',                        tp: 'online',     ck: 'ppi'  },
+      { d: 4, sh: 9,  sm: 0,  eh: 12, em: 15, n: 'Orientacion I',              tp: 'online',     ck: 'orie', pr: 'Julietta Oquendo' },
+      { d: 4, sh: 14, sm: 0,  eh: 16, em: 45, n: 'Calculo I',                  tp: 'online',     ck: 'calc' }
+    ];
     const courseMinutes = COURSES.map(c => ({
       start: toMin(c.sh, c.sm),
       end: toMin(c.eh, c.em)
@@ -74,17 +84,6 @@
 
     const DAYS = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES'];
     const todayIdx = (() => { const d = new Date().getDay(); return d >= 1 && d <= 5 ? d - 1 : -1; })();
-
-    const COURSES = [
-      { d: 0, sh: 14, sm: 45, eh: 16, em: 45, n: 'Calculo I',                  tp: 'online',     ck: 'calc' },
-      { d: 0, sh: 18, sm: 0,  eh: 20, em: 0,  n: 'Subarea de Comunicacion',     tp: 'online',     ck: 'comu' },
-      { d: 1, sh: 9,  sm: 0,  eh: 11, em: 0,  n: 'Logica Matematica',          tp: 'online',     ck: 'logi' },
-      { d: 2, sh: 8,  sm: 0,  eh: 9,  em: 30, n: 'Algoritmos y Programacion I', tp: 'presencial', ck: 'algo' },
-      { d: 2, sh: 9,  sm: 0,  eh: 11, em: 0,  n: 'Logica Matematica',          tp: 'online',     ck: 'logi' },
-      { d: 3, sh: 8,  sm: 0,  eh: 11, em: 0,  n: 'PPI',                        tp: 'online',     ck: 'ppi'  },
-      { d: 4, sh: 9,  sm: 0,  eh: 12, em: 15, n: 'Orientacion I',              tp: 'online',     ck: 'orie', pr: 'Julietta Oquendo' },
-      { d: 4, sh: 14, sm: 0,  eh: 16, em: 45, n: 'Calculo I',                  tp: 'online',     ck: 'calc' }
-    ];
 
     const wrap = document.getElementById('schedule');
 

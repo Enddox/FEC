@@ -104,6 +104,7 @@ window.FEC_DATA = {
     { d: 1, sh: 9, sm: 0, eh: 11, em: 0, ck: 'logi', tp: 'online' },
     { d: 2, sh: 8, sm: 0, eh: 9, em: 30, ck: 'algo', tp: 'presencial' },
     { d: 2, sh: 9, sm: 30, eh: 11, em: 0, ck: 'logi', tp: 'online' },
+    { d: 2, sh: 14, sm: 45, eh: 16, em: 45, ck: 'calc', tp: 'online' },
     { d: 3, sh: 8, sm: 0, eh: 11, em: 0, ck: 'ppi', tp: 'online' },
     { d: 4, sh: 9, sm: 0, eh: 12, em: 15, ck: 'orie', tp: 'online' },
     { d: 4, sh: 14, sm: 0, eh: 16, em: 45, ck: 'calc', tp: 'online' }

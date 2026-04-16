@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horario I-2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
+    }
+  </script>
+  <script src="data/site-data.js"></script>
+</head>
+<body class="p-4 md:p-8 flex items-start justify-center horario-page">
+  <div class="crt w-full max-w-5xl">
+    <div class="screen">
+
+      <a href="index.html" class="back-link glow-dim">&larr; ../inicio</a>
+
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">sys@universidad</span>
+        <span class="text-[10px]" style="color:rgba(0,255,65,0.2)">~</span>
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">horario_query</span>
+      </div>
+
+      <p class="text-xs mb-4 glow-dim" style="color:rgba(0,255,65,0.35)">$ cat /horarios/i-2026/seccion2.dat</p>
+
+      <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-3">LICENCIATURA EN COMPUTACION</h1>
+
+      <div class="flex flex-wrap gap-2 mb-5">
+        <span class="px-2 py-0.5 rounded text-[10px] border border-[rgba(0,255,65,0.15)] glow-dim">I-2026</span>
+        <span class="px-2 py-0.5 rounded text-[10px] border border-[rgba(0,255,65,0.15)] glow-dim">1ER. SEMESTRE</span>
+        <span class="px-2 py-0.5 rounded text-[10px] border border-[rgba(0,255,65,0.3)] bg-[rgba(0,255,65,0.06)] glow">SECCION 2</span>
+      </div>
+
+      <div class="grid grid-cols-[56px_repeat(5,1fr)] border border-[rgba(0,255,65,0.12)] rounded-lg overflow-hidden glow-box mb-5" id="schedule"></div>
+
+      <p class="text-[10px] mb-3 glow-dim" style="color:rgba(0,255,65,0.3)">$ cat /materias/registro.log</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-0.5 mb-5" id="legend"></div>
+
+      
+      <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
+
+    </div>
+  </div>
+
+  <script>
+    const PPM = 0.95;
+    const toMin = (h, m) => h * 60 + m;
+    const courses = window.FEC_DATA.courses;
+    const schedule = window.FEC_DATA.schedule.map((item) => {
+      const match = courses.find((course) => course.ck === item.ck) || {};
+      return {
+        ...item,
+        name: match.name || item.ck,
+        filename: match.filename || '#'
+      };
+    });
+    const COURSE_LINKS = Object.fromEntries(courses.map((course) => [course.ck, course.filename]));
+    const courseMinutes = schedule.map((c) => ({
+      start: toMin(c.sh, c.sm),
+      end: toMin(c.eh, c.em)
+    }));
+    const minStart = courseMinutes.length ? Math.min(...courseMinutes.map(c => c.start)) : 8 * 60;
+    const maxEnd = courseMinutes.length ? Math.max(...courseMinutes.map(c => c.end)) : 18 * 60;
+    const S = Math.min(8, Math.floor(minStart / 60));
+    const E = Math.max(18, Math.ceil(maxEnd / 60));
+    const TOT = (E - S) * 60;
+    const H = TOT * PPM;
+    const toPx = (m) => (m - S * 60) * PPM;
+    const fmt = (h, m) => {
+      const p = h >= 12 ? 'pm' : 'am';
+      const x = h > 12 ? h - 12 : h;
+      return x + ':' + String(m).padStart(2, '0') + ' ' + p;
+    };
+    const fmtDur = (m) => {
+      const h = Math.floor(m / 60), r = Math.round(m % 60);
+      return r ? h + 'h ' + r + 'm' : h + 'h';
+    };
+
+    const DAYS = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES'];
+    const todayIdx = (() => { const d = new Date().getDay(); return d >= 1 && d <= 5 ? d - 1 : -1; })();
+
+    const wrap = document.getElementById('schedule');
+
+    const corner = document.createElement('div');
+    corner.className = 'text-center py-2 text-[.6rem] font-semibold tracking-[.15em] uppercase border-b border-[rgba(0,255,65,0.08)] bg-[rgba(0,255,65,0.02)]';
+    corner.style.cssText = 'height:34px;color:rgba(0,255,65,0.3)';
+    wrap.appendChild(corner);
+
+    DAYS.forEach((day, i) => {
+      const el = document.createElement('div');
+      const isToday = i === todayIdx;
+      el.className = 'text-center py-2 text-[.6rem] font-semibold tracking-[.15em] uppercase border-l border-b border-[rgba(0,255,65,0.08)]';
+      el.style.cssText = `height:34px;color:${isToday ? '#00ff41' : 'rgba(0,255,65,0.3)'};background:${isToday ? 'rgba(0,255,65,0.06)' : 'rgba(0,255,65,0.02)'};text-shadow:${isToday ? '0 0 8px rgba(0,255,65,0.5)' : 'none'}`;
+      el.textContent = day;
+      wrap.appendChild(el);
+    });
+
+    const timeCol = document.createElement('div');
+    timeCol.className = 'relative border-r border-[rgba(0,255,65,0.08)]';
+    timeCol.style.height = H + 'px';
+
+    for (let h = S; h <= E; h++) {
+      const line = document.createElement('div');
+      line.className = 'hl';
+      line.style.top = toPx(h * 60) + 'px';
+      timeCol.appendChild(line);
+      if (h < E) {
+        const label = document.createElement('div');
+        label.className = 'tl';
+        label.style.top = toPx(h * 60) + 'px';
+        label.textContent = fmt(h, 0);
+        timeCol.appendChild(label);
+      }
+    }
+    wrap.appendChild(timeCol);
+
+    DAYS.forEach((_, di) => {
+      const col = document.createElement('div');
+      col.className = 'relative border-l border-[rgba(0,255,65,0.08)]';
+      col.style.height = H + 'px';
+
+      for (let h = S; h <= E; h++) {
+        const line = document.createElement('div');
+        line.className = 'hl';
+        line.style.top = toPx(h * 60) + 'px';
+        col.appendChild(line);
+      }
+
+      const dayCourses = schedule.filter(c => c.d === di);
+
+      dayCourses.forEach(c => {
+        const startM = toMin(c.sh, c.sm);
+        const endM = toMin(c.eh, c.em);
+        const top = toPx(startM);
+        const ht = toPx(endM) - top;
+        const typeLabel = c.tp === 'online' ? 'ONLINE' : 'PRES';
+        const overlaps = dayCourses.some(o =>
+          o !== c && startM < toMin(o.eh, o.em) && endM > toMin(o.sh, o.sm)
+        );
+        const compact = ht < 55;
+        const url = COURSE_LINKS[c.ck] || '#';
+
+        const block = document.createElement('div');
+        block.className = 'cb' + (overlaps ? ' solap-border' : '');
+        block.style.cssText = `top:${top}px;height:${Math.max(ht, 26)}px`;
+
+        block.innerHTML = `
+          <a href="${url}" class="block" style="display:block;width:100%;height:100%;color:inherit;text-decoration:none;">
+            <div class="bar"></div>
+            <div class="flex items-center gap-0 mb-0.5">
+              <span class="text-[7px] font-bold tracking-wider glow-dim" style="color:rgba(0,255,65,0.5)">[${typeLabel}]</span>
+              ${overlaps ? '<span class="solap text-[7px] font-bold tracking-wider ml-1">!SOLAP</span>' : ''}
+            </div>
+            <p class="text-[.72rem] font-semibold leading-tight glow" style="font-size:${compact ? '.62' : '.72'}rem">${c.name}</p>
+            ${!compact ? `<p class="text-[.55rem] mt-0.5" style="color:rgba(0,255,65,0.25)">${fmt(c.sh, c.sm)}-${fmt(c.eh, c.em)}</p>` : ''}
+          </a>
+        `;
+
+        col.appendChild(block);
+      });
+
+      wrap.appendChild(col);
+    });
+
+    const legendData = [
+      { n: 'Algoritmos y Programacion I', h: '1.5h' },
+      { n: 'Logica Matematica',           h: '4h' },
+      { n: 'Calculo I',                   h: '4h 45m' },
+      { n: 'Subarea de Comunicacion',      h: '1h 40m' },
+      { n: 'Orientacion I',               h: '3h 15m' },
+      { n: 'PPI',                         h: '3h' }
+    ];
+
+    const legendEl = document.getElementById('legend');
+    legendData.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'flex items-center gap-2.5 px-3 py-1.5 rounded hover:bg-[rgba(0,255,65,0.03)] transition-colors cursor-default';
+      row.innerHTML = `
+        <span class="text-[8px] glow" style="color:#00ff41">●</span>
+        <span class="text-[11px] font-semibold glow-dim" style="color:rgba(0,255,65,0.6)">${item.n}</span>
+        <span class="ml-auto text-[10px] font-mono" style="color:rgba(0,255,65,0.3)">${item.h}</span>
+      `;
+      legendEl.appendChild(row);
+    });
+  </script>
+</body>
+</html>

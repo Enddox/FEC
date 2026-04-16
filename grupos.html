@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grupos - I-2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
+    }
+  </script>
+</head>
+<body class="p-4 md:p-8 flex items-start justify-center">
+  <div class="crt w-full max-w-2xl">
+    <div class="screen">
+
+      <a href="index.html" class="back-link glow-dim">&larr; ../inicio</a>
+
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">sys@universidad</span>
+        <span class="text-[10px]" style="color:rgba(0,255,65,0.2)">~</span>
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">grupos_query</span>
+      </div>
+
+      <p class="text-xs mb-4 glow-dim" style="color:rgba(0,255,65,0.35)">$ cat /grupos/seccion2.dat</p>
+
+      <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-1">GRUPOS DE MATERIAS</h1>
+      <p class="text-[11px] mb-5 glow-dim" style="color:rgba(0,255,65,0.4)">1er. Semestre &mdash; Seccion 2 &mdash; I-2026</p>
+
+      <div class="flex flex-col gap-2 mb-6" id="groups"></div>
+
+      <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
+
+    </div>
+  </div>
+
+  <script>
+    const data = [
+      {
+        name: 'PPI - Introduccion a la computacion y SHA',
+        platform: 'wa',
+        url: 'https://chat.whatsapp.com/DWMd6nkpg1O3pDOcWf7OXc?mode=gi_t'
+      },
+      {
+        name: 'Algoritmos y Programacion I',
+        platform: 'tg',
+        url: 'https://t.me/+eOblYHAxTas4M2Rh'
+      },
+      {
+        name: 'Logica Matematica',
+        platform: 'wa',
+        url: 'https://chat.whatsapp.com/EKEJEgShvGG7ITB1svLtq8?mode=gi_t'
+      },
+      {
+        name: 'Sub-Area Comunicacion y Lenguaje',
+        platform: 'wa',
+        url: 'https://chat.whatsapp.com/DZBTbi2rdvkAww3Iy4US5C?mode=gi_t'
+      },
+      {
+        name: 'Orientacion I',
+        platform: 'tg',
+        url: 'https://t.me/+kXYWVqGj8v4wOTQx'
+      },
+      {
+        name: 'Calculo I',
+        platform: 'wa',
+        url: 'https://chat.whatsapp.com/I6s368JjVsv5eWfm4rXhM3?mode=gi_t'
+      }
+    ];
+
+    const el = document.getElementById('groups');
+
+    data.forEach(item => {
+      const isWa = item.platform === 'wa';
+      const tag = isWa ? 'WHATSAPP' : 'TELEGRAM';
+      const btnClass = isWa ? 'btn-wa' : 'btn-tg';
+      const icon = isWa ? 'fa-brands fa-whatsapp' : 'fa-brands fa-telegram';
+
+      const row = document.createElement('div');
+      row.className = 'group-row';
+      row.innerHTML = `
+        <div>
+          <p class="text-[11px] font-semibold glow-dim" style="color:rgba(0,255,65,0.7)">${item.name}</p>
+          <span class="text-[8px] tracking-wider" style="color:rgba(0,255,65,0.25)">[${tag}]</span>
+        </div>
+        <a href="${item.url}" target="_blank" class="btn-group ${btnClass}">
+          <i class="${icon}" style="font-size:11px"></i>
+          ${tag}
+        </a>
+      `;
+      el.appendChild(row);
+    });
+  </script>
+</body>
+</html>

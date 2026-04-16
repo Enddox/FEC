@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Academico - I-2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
+    }
+  </script>
+  <script src="data/site-data.js"></script>
+</head>
+<body class="p-4 md:p-8 flex items-start justify-center">
+  <div class="crt w-full max-w-4xl">
+    <div class="screen">
+
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">sys@universidad</span>
+        <span class="text-[10px]" style="color:rgba(0,255,65,0.2)">~</span>
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">main_menu</span>
+      </div>
+
+      <p class="text-xs mb-4 glow-dim" style="color:rgba(0,255,65,0.35)">$ ./inicio.sh</p>
+
+      <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-1">SISTEMA ACADEMICO</h1>
+      <p class="text-[11px] mb-5 glow-dim" style="color:rgba(0,255,65,0.4)">Lic. Computacion &mdash; I-2026 &mdash; Seccion 2 &mdash; 1er. Semestre</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_220px] gap-5">
+
+        <div>
+          <div class="section-label glow-dim">[ Navegacion Principal ]</div>
+          <nav class="flex flex-col gap-2 mb-5">
+            <a href="horario.html" class="nav-item glow-box">
+              <span class="text-sm font-semibold glow">Horario</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">horario.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+            <a href="grupos.html" class="nav-item glow-box">
+              <span class="text-sm font-semibold glow">Grupos</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">grupos.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+            <a href="profesores.html" class="nav-item glow-box">
+              <span class="text-sm font-semibold glow">Profesores</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">profesores.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+            <a href="actividades.html" class="nav-item glow-box">
+              <span class="text-sm font-semibold glow">Actividades</span>
+              <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">actividades.html</span>
+              <span class="arrow text-sm">&rarr;</span>
+            </a>
+          </nav>
+
+          <div class="section-label glow-dim">[ Materias ]</div>
+          <nav id="subject-nav" class="flex flex-col gap-2 mb-4"></nav>
+
+          <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
+        </div>
+
+        <aside>
+          <div class="section-label glow-dim">[ Ultimas Noticias ]</div>
+          <div id="index-news" class="border border-[rgba(0,255,65,0.08)] rounded-md p-3 glow-box" style="background:rgba(0,255,65,0.01)"></div>
+
+        </aside>
+
+      </div>
+
+    </div>
+  </div>
+  <script>
+    function renderIndexNews() {
+      const container = document.getElementById('index-news');
+      if (!window.FEC_DATA || !container) return;
+      container.innerHTML = '';
+      window.FEC_DATA.news.forEach((item) => {
+        const newsItem = document.createElement('div');
+        newsItem.className = 'news-item';
+        newsItem.innerHTML = `
+          <span class="news-tag" style="background:rgba(0,255,65,0.1);color:rgba(0,255,65,0.5)">${item.tag}</span>
+          <p class="text-[10px] glow-dim" style="color:rgba(0,255,65,0.6)">${item.content}</p>
+          <p class="text-[8px] mt-1" style="color:rgba(0,255,65,0.2)">${item.date}</p>
+        `;
+        container.appendChild(newsItem);
+      });
+    }
+    function renderSubjectNav() {
+      const container = document.getElementById('subject-nav');
+      if (!window.FEC_DATA || !container) return;
+      container.innerHTML = '';
+      window.FEC_DATA.nav.subjects.forEach((sub) => {
+        const link = document.createElement('a');
+        const enabled = sub.enabled !== false;
+        link.className = 'nav-item glow-box' + (enabled ? '' : ' disabled');
+        link.href = enabled ? sub.href : '#';
+        if (!enabled) link.addEventListener('click', (e) => e.preventDefault());
+        link.innerHTML = `
+          <span class="text-sm font-semibold${enabled ? ' glow' : ''}">${sub.title}</span>
+          <span class="text-[10px]" style="color:rgba(0,255,65,0.35)">${sub.href}</span>
+          <span class="arrow text-sm">&rarr;</span>
+        `;
+        container.appendChild(link);
+      });
+    }
+    renderIndexNews();
+    renderSubjectNav();
+  </script>
+</body>
+</html>

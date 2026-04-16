@@ -1,0 +1,540 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profesores - I-2026</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.header-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.header-line .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff41;
+  box-shadow: 0 0 6px #00ff41;
+  animation: blink 2s ease-in-out infinite;
+}
+.total-badge {
+  display: inline-block;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: rgba(0,255,65,0.35);
+  padding: 2px 7px;
+  border: 1px solid rgba(0,255,65,0.1);
+  border-radius: 3px;
+  margin-left: auto;
+}
+.prof-card {
+  border: 1px solid rgba(0,255,65,0.08);
+  border-radius: 6px;
+  padding: 14px;
+  background: rgba(0,255,65,0.015);
+  margin-bottom: 10px;
+  transition: all 0.15s;
+}
+.prof-card:hover {
+  border-color: rgba(0,255,65,0.25);
+  background: rgba(0,255,65,0.04);
+}
+.prof-card:last-child {
+  margin-bottom: 0;
+}
+.prof-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(0,255,65,0.9);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(0,255,65,0.08);
+}
+.prof-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.prof-row:last-child {
+  margin-bottom: 0;
+}
+.prof-icon {
+  font-size: 10px;
+  opacity: 0.4;
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.prof-label {
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: rgba(0,255,65,0.25);
+  flex-shrink: 0;
+  min-width: 62px;
+}
+.prof-val {
+  font-size: 10px;
+  color: rgba(0,255,65,0.65);
+  word-break: break-all;
+}
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 8px;
+  border: 1px solid rgba(0,255,65,0.12);
+  color: rgba(0,255,65,0.4);
+  background: rgba(0,255,65,0.03);
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.copy-btn:hover {
+  border-color: rgba(0,255,65,0.4);
+  color: #00ff41;
+  background: rgba(0,255,65,0.1);
+}
+.copy-btn.copied {
+  border-color: rgba(0,255,65,0.5);
+  color: #00ff41;
+}
+
+/* ===== CONSTRUCTION OVERLAY ===== */
+/* TODO: Remove this entire section when page is ready */
+.construction-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.construction-content {
+  text-align: center;
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.construction-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  display: block;
+  animation: rotate 3s linear infinite;
+}
+
+.construction-text {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.construction-subtext {
+  font-size: 12px;
+  opacity: 0.6;
+  letter-spacing: 0.05em;
+}
+
+.countdown {
+  font-size: 48px;
+  font-weight: 700;
+  color: #00ff41;
+  margin: 20px 0;
+  letter-spacing: 0.1em;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.redirect-text {
+  font-size: 14px;
+  opacity: 0.8;
+  letter-spacing: 0.05em;
+  margin-top: 10px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+/* ===== END CONSTRUCTION OVERLAY ===== */
+</style>
+</head>
+<body>
+
+<div class="crt">
+  <div class="screen" id="app"></div>
+  <div class="construction-overlay">
+    <div class="construction-content">
+      <div class="construction-icon">&#9881;</div>
+      <div class="construction-text">CONSTRUCCIÓN</div>
+      <div class="construction-subtext">Esta página está en construcción. Por favor, regresa más tarde.</div>
+      <div class="countdown" id="countdown">10</div>
+      <div class="redirect-text">Redirigiendo a la página principal...</div>
+    </div>
+  </div>
+</div>
+
+<script src="data/site-data.js"></script>
+<script>
+(function () {
+  var app = document.getElementById('app');
+  var professors = window.FEC_DATA.professors;
+
+  var html = '';
+
+  html += '<div class="section-label">sistema academico // i-2026</div>';
+  html += '<div class="header-line">';
+  html += '  <span class="dot"></span>';
+  html += '  <span class="glow" style="font-size:15px;font-weight:700;letter-spacing:0.04em;">PROFESORES</span>';
+  html += '  <span class="total-badge">' + professors.length + ' DOCENTES</span>';
+  html += '</div>';
+
+  professors.forEach(function (prof, idx) {
+    html += '<div class="prof-card">';
+    html += '  <div class="prof-name glow-dim">' + prof.name + '</div>';
+    html += '  <div class="prof-row">';
+    html += '    <span class="prof-icon">+</span>';
+    html += '    <span class="prof-label">MATERIA</span>';
+    html += '    <span class="prof-val">' + prof.course + '</span>';
+    html += '  </div>';
+    html += '  <div class="prof-row">';
+    html += '    <span class="prof-icon">@</span>';
+    html += '    <span class="prof-label">EMAIL</span>';
+    html += '    <span class="prof-val" id="email-' + idx + '">' + prof.email + '</span>';
+    html += '    <button class="copy-btn" onclick="copyField(\'email-' + idx + '\',\'' + prof.email.replace(/'/g, "\\'") + '\',this)">COPIAR</button>';
+    html += '  </div>';
+    html += '  <div class="prof-row">';
+    html += '    <span class="prof-icon">*</span>';
+    html += '    <span class="prof-label">TELEFONO</span>';
+    html += '    <span class="prof-val" id="phone-' + idx + '">' + prof.phone + '</span>';
+    html += '    <button class="copy-btn" onclick="copyField(\'phone-' + idx + '\',\'' + prof.phone.replace(/'/g, "\\'") + '\',this)">COPIAR</button>';
+    html += '  </div>';
+    html += '</div>';
+  });
+
+  html += '<div style="margin-top:18px;font-size:9px;color:rgba(0,255,65,0.2);" class="cursor-blink">fin del listado</div>';
+
+  app.innerHTML = html;
+
+  window.copyField = function (id, value, btn) {
+    navigator.clipboard.writeText(value).then(function () {
+      btn.textContent = 'COPIADO';
+      btn.classList.add('copied');
+      setTimeout(function () {
+        btn.textContent = 'COPIAR';
+        btn.classList.remove('copied');
+      }, 1500);
+    });
+  };
+
+  /* ===== CONSTRUCTION COUNTDOWN AND REDIRECT ===== */
+  /* TODO: Remove this entire section when page is ready */
+  var countdownElement = document.getElementById('countdown');
+  var timeLeft = 10;
+
+  var countdownInterval = setInterval(function() {
+    timeLeft--;
+    countdownElement.textContent = timeLeft;
+    
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
+      window.location.href = 'index.html';
+    }
+  }, 1000);
+  /* ===== END CONSTRUCTION COUNTDOWN AND REDIRECT ===== */
+})();
+</script>
+
+</body>
+=======
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profesores - I-2026</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.header-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.header-line .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff41;
+  box-shadow: 0 0 6px #00ff41;
+  animation: blink 2s ease-in-out infinite;
+}
+.total-badge {
+  display: inline-block;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: rgba(0,255,65,0.35);
+  padding: 2px 7px;
+  border: 1px solid rgba(0,255,65,0.1);
+  border-radius: 3px;
+  margin-left: auto;
+}
+.prof-card {
+  border: 1px solid rgba(0,255,65,0.08);
+  border-radius: 6px;
+  padding: 14px;
+  background: rgba(0,255,65,0.015);
+  margin-bottom: 10px;
+  transition: all 0.15s;
+}
+.prof-card:hover {
+  border-color: rgba(0,255,65,0.25);
+  background: rgba(0,255,65,0.04);
+}
+.prof-card:last-child {
+  margin-bottom: 0;
+}
+.prof-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(0,255,65,0.9);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(0,255,65,0.08);
+}
+.prof-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.prof-row:last-child {
+  margin-bottom: 0;
+}
+.prof-icon {
+  font-size: 10px;
+  opacity: 0.4;
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.prof-label {
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: rgba(0,255,65,0.25);
+  flex-shrink: 0;
+  min-width: 62px;
+}
+.prof-val {
+  font-size: 10px;
+  color: rgba(0,255,65,0.65);
+  word-break: break-all;
+}
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 8px;
+  border: 1px solid rgba(0,255,65,0.12);
+  color: rgba(0,255,65,0.4);
+  background: rgba(0,255,65,0.03);
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.copy-btn:hover {
+  border-color: rgba(0,255,65,0.4);
+  color: #00ff41;
+  background: rgba(0,255,65,0.1);
+}
+.copy-btn.copied {
+  border-color: rgba(0,255,65,0.5);
+  color: #00ff41;
+}
+
+/* ===== CONSTRUCTION OVERLAY ===== */
+/* TODO: Remove this entire section when page is ready */
+.construction-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.construction-content {
+  text-align: center;
+  color: #00ff41;
+  font-family: 'JetBrains Mono', monospace;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.construction-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  display: block;
+  animation: rotate 3s linear infinite;
+}
+
+.construction-text {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.construction-subtext {
+  font-size: 12px;
+  opacity: 0.6;
+  letter-spacing: 0.05em;
+}
+
+.countdown {
+  font-size: 48px;
+  font-weight: 700;
+  color: #00ff41;
+  margin: 20px 0;
+  letter-spacing: 0.1em;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.redirect-text {
+  font-size: 14px;
+  opacity: 0.8;
+  letter-spacing: 0.05em;
+  margin-top: 10px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+/* ===== END CONSTRUCTION OVERLAY ===== */
+</style>
+</head>
+<body>
+
+<div class="crt">
+  <div class="screen" id="app"></div>
+  <div class="construction-overlay">
+    <div class="construction-content">
+      <div class="construction-icon">&#9881;</div>
+      <div class="construction-text">CONSTRUCCIÓN</div>
+      <div class="construction-subtext">Esta página está en construcción. Por favor, regresa más tarde.</div>
+      <div class="countdown" id="countdown">10</div>
+      <div class="redirect-text">Redirigiendo a la página principal...</div>
+    </div>
+  </div>
+</div>
+
+<script src="data/site-data.js"></script>
+<script>
+(function () {
+  var app = document.getElementById('app');
+  var professors = window.FEC_DATA.professors;
+
+  var html = '';
+
+  html += '<div class="section-label">sistema academico // i-2026</div>';
+  html += '<div class="header-line">';
+  html += '  <span class="dot"></span>';
+  html += '  <span class="glow" style="font-size:15px;font-weight:700;letter-spacing:0.04em;">PROFESORES</span>';
+  html += '  <span class="total-badge">' + professors.length + ' DOCENTES</span>';
+  html += '</div>';
+
+  professors.forEach(function (prof, idx) {
+    html += '<div class="prof-card">';
+    html += '  <div class="prof-name glow-dim">' + prof.name + '</div>';
+    html += '  <div class="prof-row">';
+    html += '    <span class="prof-icon">+</span>';
+    html += '    <span class="prof-label">MATERIA</span>';
+    html += '    <span class="prof-val">' + prof.course + '</span>';
+    html += '  </div>';
+    html += '  <div class="prof-row">';
+    html += '    <span class="prof-icon">@</span>';
+    html += '    <span class="prof-label">EMAIL</span>';
+    html += '    <span class="prof-val" id="email-' + idx + '">' + prof.email + '</span>';
+    html += '    <button class="copy-btn" onclick="copyField(\'email-' + idx + '\',\'' + prof.email.replace(/'/g, "\\'") + '\',this)">COPIAR</button>';
+    html += '  </div>';
+    html += '  <div class="prof-row">';
+    html += '    <span class="prof-icon">*</span>';
+    html += '    <span class="prof-label">TELEFONO</span>';
+    html += '    <span class="prof-val" id="phone-' + idx + '">' + prof.phone + '</span>';
+    html += '    <button class="copy-btn" onclick="copyField(\'phone-' + idx + '\',\'' + prof.phone.replace(/'/g, "\\'") + '\',this)">COPIAR</button>';
+    html += '  </div>';
+    html += '</div>';
+  });
+
+  html += '<div style="margin-top:18px;font-size:9px;color:rgba(0,255,65,0.2);" class="cursor-blink">fin del listado</div>';
+
+  app.innerHTML = html;
+
+  window.copyField = function (id, value, btn) {
+    navigator.clipboard.writeText(value).then(function () {
+      btn.textContent = 'COPIADO';
+      btn.classList.add('copied');
+      setTimeout(function () {
+        btn.textContent = 'COPIAR';
+        btn.classList.remove('copied');
+      }, 1500);
+    });
+  };
+
+  /* ===== CONSTRUCTION COUNTDOWN AND REDIRECT ===== */
+  /* TODO: Remove this entire section when page is ready */
+  var countdownElement = document.getElementById('countdown');
+  var timeLeft = 10;
+
+  var countdownInterval = setInterval(function() {
+    timeLeft--;
+    countdownElement.textContent = timeLeft;
+    
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
+      window.location.href = 'index.html';
+    }
+  }, 1000);
+  /* ===== END CONSTRUCTION COUNTDOWN AND REDIRECT ===== */
+})();
+</script>
+
+</body>
+>>>>>>> 55352c53a8dd1d2abd7ffcc4a8de50ea164e3920
+</html>

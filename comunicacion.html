@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sub-Area Comunicacion - I-2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>tailwind.config={theme:{extend:{fontFamily:{mono:['JetBrains Mono','monospace']}}}}</script>
+  <script src="data/site-data.js"></script>
+</head>
+<body class="p-4 md:p-8 flex items-start justify-center">
+  <div class="crt w-full max-w-4xl">
+    <div class="screen">
+
+      <a href="index.html" class="back-link glow-dim">&larr; ../inicio</a>
+
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,.4)">sys@universidad</span>
+        <span class="text-[10px]" style="color:rgba(0,255,65,.2)">~</span>
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,.4)">materia_query</span>
+      </div>
+
+      <p class="text-xs mb-4 glow-dim" style="color:rgba(0,255,65,.35)">$ cat /materias/comunicacion.dat</p>
+
+      <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-1">SUB-AREA COMUNICACION Y LENGUAJE</h1>
+      <p class="text-[11px] mb-5 glow-dim" style="color:rgba(0,255,65,.4)">1er. Semestre &mdash; Seccion 2 &mdash; I-2026</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_240px] gap-5">
+
+        <div>
+          <div class="section-label glow-dim">[ Datos Generales ]</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
+            <div class="info-card glow-box">
+              <div class="info-label">Materia</div>
+              <div class="info-value" style="font-size:11px">Sub-Area Comunicacion y Lenguaje</div>
+            </div>
+            <div class="info-card glow-box">
+              <div class="info-label">Modalidad</div>
+              <div class="info-value">Online / Presencial</div>
+            </div>          <div class="info-card glow-box">
+            <div class="info-label">Profesor/a</div>
+            <div class="info-value">Eddymar Matheus</div>
+          </div>          </div>
+
+
+          <div id="meeting-links"></div>
+
+          <div class="section-label glow-dim">[ Material del Semestre ]</div>
+          <div class="info-card glow-box mb-4">
+            <span class="activity-tag tag-material">material</span>
+            <p class="text-[11px] font-semibold" style="color:rgba(0,255,65,.7)">Manual de Lenguaje y Comunicacion (PDF)</p>
+            <p class="text-[9px] mt-1" style="color:rgba(0,255,65,.35)">Material base del semestre.</p>
+            <a href="data/Manual EUS Lenguaje y Comunicación..pdf" target="_blank" class="link-dl">
+              <i class="fa-solid fa-download" style="font-size:8px"></i> Descargar manual
+            </a>
+            <div class="restriction">
+              <p class="text-[8px] font-semibold" style="color:rgba(239,68,68,.5);text-shadow:0 0 3px rgba(239,68,68,.2)"><i class="fa-solid fa-triangle-exclamation" style="font-size:7px;margin-right:3px"></i>RESTRICCION</p>
+              <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.3)">No adelantar la lectura de temas que aun no han sido asignados.</p>
+            </div>
+          </div>
+
+          <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,.3)">$ _</p>
+        </div>
+
+        <aside>
+          <div class="section-label glow-dim">[ Actividades ]</div>
+          <div id="comunicacion-activities" class="border border-[rgba(0,255,65,.08)] rounded-md p-3 glow-box sidebar-scroll" style="background:rgba(0,255,65,.01)"></div>
+        </aside>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function copyCode(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fa-solid fa-check" style="font-size:9px"></i> Copiado';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = orig;
+        }, 1500);
+      });
+    }
+
+    function renderComunicacionActivities() {
+      const container = document.getElementById('comunicacion-activities');
+      if (!container || !window.FEC_DATA) return;
+      container.innerHTML = '';
+      window.FEC_DATA.activities.comu.forEach((item) => {
+        const activity = document.createElement('div');
+        activity.className = 'activity-item';
+        activity.innerHTML = `
+          <span class="activity-tag tag-hw">${item.type}</span>
+          <p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.7)">${item.title}</p>
+          <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.35)">${item.desc}</p>
+          ${item.image ? `<div class="mt-4 overflow-hidden rounded-md border border-[rgba(0,255,65,.08)] bg-[#050505]"><img src="${item.image}" alt="Actividad visual" class="w-full object-cover" /></div>` : ''}
+          <div class="date-row">
+            <div>
+              <div class="date-label">Asignada</div>
+              <div class="date-val">${item.assigned}</div>
+            </div>
+            <div>
+              <div class="date-label">Entrega</div>
+              <div class="date-val">${item.due}</div>
+            </div>
+          </div>
+        `;
+        container.appendChild(activity);
+      });
+      if (window.FEC_DATA.activities.comu.length === 0) {
+        container.innerHTML = '<div class="activity-item" style="opacity:.4"><span class="activity-tag tag-exam">aviso</span><p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.5)">No hay actividades registradas</p></div>';
+      }
+    }
+    renderComunicacionActivities();
+    renderMeetingLinks('comunicacion.html', 'meeting-links');
+
+    function renderMeetingLinks(filename, containerId) {
+      const course = window.FEC_GET_COURSE_BY_FILENAME(filename);
+      const container = document.getElementById(containerId);
+      if (!container || !course || !course.meetingLinks || !course.meetingLinks.length) return;
+      container.innerHTML = `
+        <div class="section-label glow-dim">[ Enlaces de reunión ]</div>
+        <div class="info-card glow-box mb-5">
+          ${course.meetingLinks.map(link => `<a href="${link.url}" target="_blank" class="link-btn link-zoom">${link.title}</a>`).join('')}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

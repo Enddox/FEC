@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculo I - I-2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: { extend: { fontFamily: { mono: ['JetBrains Mono', 'monospace'] } } }
+    }
+  </script>
+  <script src="data/site-data.js"></script>
+</head>
+<body class="p-4 md:p-8 flex items-start justify-center">
+  <div class="crt w-full max-w-4xl">
+    <div class="screen">
+
+      <a href="index.html" class="back-link glow-dim">&larr; ../inicio</a>
+
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">sys@universidad</span>
+        <span class="text-[10px]" style="color:rgba(0,255,65,0.2)">~</span>
+        <span class="text-[10px] tracking-widest uppercase glow-dim" style="color:rgba(0,255,65,0.4)">materia_query</span>
+      </div>
+
+      <p class="text-xs mb-4 glow-dim" style="color:rgba(0,255,65,0.35)">$ cat /materias/calculoi.dat</p>
+
+      <h1 class="text-lg md:text-xl font-bold glow tracking-tight mb-1">CALCULO I</h1>
+      <p class="text-[11px] mb-5 glow-dim" style="color:rgba(0,255,65,0.4)">1er. Semestre &mdash; Seccion 2 &mdash; I-2026</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-5">
+        <div>
+          <div class="section-label glow-dim">[ Datos Generales ]</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-5">
+            <div class="info-card glow-box">
+              <div class="info-label">Materia</div>
+              <div class="info-value">Calculo I</div>
+            </div>
+            <div class="info-card glow-box">
+              <div class="info-label">Modalidad</div>
+              <div class="info-value">Online</div>
+            </div>
+            <div class="info-card glow-box">
+              <div class="info-label">Profesor/a</div>
+              <div class="info-value">Betsi De Pascal</div>
+            </div>
+          </div>
+
+          <div class="section-label glow-dim">[ Google Classroom ]</div>
+          <div class="info-card glow-box mb-5">
+            <div class="info-label">Codigo de acceso</div>
+            <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">4nmacc2h</div>
+            <div class="flex items-center gap-2 mt-3">
+              <a href="https://classroom.google.com" target="_blank" class="link-btn link-classroom">
+                <i class="fa-brands fa-google" style="font-size:12px"></i>
+                Abrir Classroom
+              </a>
+              <button class="copy-btn" onclick="copyCode('4nmacc2h', this)">
+                <i class="fa-regular fa-copy" style="font-size:9px"></i> Copiar
+              </button>
+            </div>
+          </div>
+
+          <div class="section-label glow-dim">[ Zoom ]</div>
+          <div class="info-card glow-box mb-5">
+            <div class="info-label">ID de la sala</div>
+            <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.1em">863 0350 7525</div>
+            <div class="info-label mt-3">Codigo de acceso</div>
+            <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">4ua8xi</div>
+            <div class="flex items-center gap-2 mt-3">
+              <a href="https://zoom.us/join" target="_blank" class="link-btn link-zoom">
+                <i class="fa-solid fa-video" style="font-size:11px"></i>
+                Unirse a Zoom
+              </a>
+              <button class="copy-btn" onclick="copyCode('86303507525', this)">
+                <i class="fa-regular fa-copy" style="font-size:9px"></i> ID
+              </button>
+              <button class="copy-btn" onclick="copyCode('4ua8xi', this)">
+                <i class="fa-regular fa-copy" style="font-size:9px"></i> Clave
+              </button>
+            </div>
+          </div>
+          <div class="mt-3 p-3 border border-red-500 rounded-md" style="background:rgba(239,68,68,0.1);">
+            <div class="flex items-center gap-2">
+              <i class="fa-brands fa-discord" style="color:#ef4444;font-size:14px;"></i>
+              <span style="color:#ef4444;font-weight:bold;font-size:12px;">QUEREMOS CAMBIAR A DISCORD</span>
+            </div>
+          </div>
+          <div id="meeting-links"></div>
+        </div>
+
+        <aside>
+          <div class="section-label glow-dim">[ Actividades ]</div>
+          <div id="calc-activities" class="border border-[rgba(0,255,65,0.08)] rounded-md p-3 glow-box sidebar-scroll" style="background:rgba(0,255,65,0.01)"></div>
+        </aside>
+      </div>
+
+      <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
+
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    function copyCode(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fa-solid fa-check" style="font-size:9px"></i> Copiado';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = orig;
+        }, 1500);
+      });
+    }
+
+    function renderCalcActivities() {
+      const container = document.getElementById('calc-activities');
+      if (!container || !window.FEC_DATA) return;
+      container.innerHTML = '';
+      window.FEC_DATA.activities.calc.forEach((item) => {
+        const activity = document.createElement('div');
+        activity.className = 'activity-item';
+        activity.innerHTML = `
+          <span class="activity-tag tag-hw">${item.type}</span>
+          <p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.7)">${item.title}</p>
+          <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.35)">${item.desc}</p>
+          <div class="date-row">
+            <div>
+              <div class="date-label">Asignada</div>
+              <div class="date-val">${item.assigned}</div>
+            </div>
+            <div>
+              <div class="date-label">Entrega</div>
+              <div class="date-val">${item.due}</div>
+            </div>
+          </div>
+        `;
+        container.appendChild(activity);
+      });
+      if (window.FEC_DATA.activities.calc.length === 0) {
+        container.innerHTML = '<div class="activity-item" style="opacity:.4"><span class="activity-tag tag-exam">aviso</span><p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.5)">No hay actividades registradas</p></div>';
+      }
+    }
+    renderCalcActivities();
+    renderMeetingLinks('calculoi.html', 'meeting-links');
+
+    function renderMeetingLinks(filename, containerId) {
+      const course = window.FEC_GET_COURSE_BY_FILENAME(filename);
+      const container = document.getElementById(containerId);
+      if (!container || !course || !course.meetingLinks || !course.meetingLinks.length) return;
+      container.innerHTML = `
+        <div class="section-label glow-dim">[ Enlaces de reunión ]</div>
+        <div class="info-card glow-box mb-5">
+          ${course.meetingLinks.map(link => `<a href="${link.url}" target="_blank" class="link-btn link-zoom">${link.title}</a>`).join('')}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -58,7 +58,7 @@ window.FEC_DATA = {
       filename: 'algoritmos.html',
       name: 'Algoritmos y Programacion I',
       pageTitle: 'Algoritmos y Programacion I - I-2026',
-      modalidad: 'Presencial',
+      modalidad: 'Online',
       profesor: '',
       classroomCode: 'algo123',
       classroomUrl: 'https://classroom.google.com',
@@ -102,7 +102,7 @@ window.FEC_DATA = {
     { d: 0, sh: 16, sm: 0, eh: 17, em: 30, ck: 'calc', tp: 'online' },
     { d: 0, sh: 18, sm: 0, eh: 20, em: 0, ck: 'comu', tp: 'online' },
     { d: 1, sh: 9, sm: 45, eh: 12, em: 0, ck: 'logi', tp: 'online' },
-    { d: 2, sh: 8, sm: 0, eh: 9, em: 30, ck: 'algo', tp: 'presencial' },
+    { d: 2, sh: 8, sm: 0, eh: 9, em: 30, ck: 'algo', tp: 'online' },
     { d: 2, sh: 9, sm: 45, eh: 12, em: 0, ck: 'logi', tp: 'online' },
     { d: 2, sh: 16, sm: 0, eh: 17, em: 30, ck: 'calc', tp: 'online' },
     { d: 3, sh: 8, sm: 0, eh: 11, em: 0, ck: 'ppi', tp: 'online' },
@@ -114,6 +114,15 @@ window.FEC_DATA = {
     { name: 'Eddymar Matheus', course: 'Comunicación y Lenguaje', email: 'eddymar.matheus@universidad.edu' }
   ],
   activities: {
+    calc: [
+      {
+        type: 'opcional',
+        title: 'Ejercicios de Repaso',
+        desc: 'Realizar los ejercicios de repaso que se encuentran en el PDF de Google Classroom.',
+        assigned: '15 abril 2026',
+        due: '17 abril 2026'
+      }
+    ],
     comu: [
       {
         type: 'tarea',
@@ -141,7 +150,7 @@ window.FEC_DATA = {
     },
     {
       tag: 'comunicado',
-      content: 'Atención los estudiantes de la sección 2 del primer semestre: la materia Algoritmos y Programación I se dará de manera presencial en Grano de Oro el día miércoles de 8:00AM a 9:30AM. Además, la materia de la Subárea de Comunicación y Lenguaje del día lunes, que es a distancia, se dará de 6:00PM a 7:30PM.',
+      content: 'Atención los estudiantes de la sección 2 del primer semestre: la materia Algoritmos y Programación I se dará de manera online el día miércoles de 8:00AM a 9:30AM. Además, la materia de la Subárea de Comunicación y Lenguaje del día lunes, que es a distancia, se dará de 6:00PM a 7:30PM.',
       date: '13 abril 2026 — 13:58'
     },
     {

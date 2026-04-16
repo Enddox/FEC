@@ -83,6 +83,12 @@
               </button>
             </div>
           </div>
+          <div class="mt-3 p-3 border border-red-500 rounded-md" style="background:rgba(239,68,68,0.1);">
+            <div class="flex items-center gap-2">
+              <i class="fa-brands fa-discord" style="color:#ef4444;font-size:14px;"></i>
+              <span style="color:#ef4444;font-weight:bold;font-size:12px;">QUEREMOS CAMBIAR A DISCORD</span>
+            </div>
+          </div>
           <div id="meeting-links"></div>
         </div>
 
@@ -100,28 +106,44 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script>
     function copyCode(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fa-solid fa-check" style="font-size:9px"></i> Copiado';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = orig;
+        }, 1500);
+      });
+    }
+
+    function renderCalcActivities() {
       const container = document.getElementById('calc-activities');
       if (!container || !window.FEC_DATA) return;
-      const activities = window.FEC_DATA.activities.calc || [];
       container.innerHTML = '';
-      if (!activities.length) {
-        container.innerHTML = '<div class="activity-card glow-box" style="opacity:.5"><p class="text-[10px]">No hay actividades registradas</p></div>';
-        return;
-      }
-      activities.forEach((item) => {
-        const card = document.createElement('div');
-        card.className = 'activity-card glow-box mb-3';
-        card.innerHTML = `
-          <span class="activity-tag">${item.type}</span>
-          <p class="activity-title">${item.title}</p>
-          <p class="activity-desc">${item.desc}</p>
-          <div class="activity-meta">
-            <span>Asignada: ${item.assigned}</span>
-            <span>Entrega: ${item.due}</span>
+      window.FEC_DATA.activities.calc.forEach((item) => {
+        const activity = document.createElement('div');
+        activity.className = 'activity-item';
+        activity.innerHTML = `
+          <span class="activity-tag tag-hw">${item.type}</span>
+          <p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.7)">${item.title}</p>
+          <p class="text-[8px] mt-1" style="color:rgba(0,255,65,.35)">${item.desc}</p>
+          <div class="date-row">
+            <div>
+              <div class="date-label">Asignada</div>
+              <div class="date-val">${item.assigned}</div>
+            </div>
+            <div>
+              <div class="date-label">Entrega</div>
+              <div class="date-val">${item.due}</div>
+            </div>
           </div>
         `;
-        container.appendChild(card);
+        container.appendChild(activity);
       });
+      if (window.FEC_DATA.activities.calc.length === 0) {
+        container.innerHTML = '<div class="activity-item" style="opacity:.4"><span class="activity-tag tag-exam">aviso</span><p class="text-[10px] font-semibold" style="color:rgba(0,255,65,.5)">No hay actividades registradas</p></div>';
+      }
     }
     renderCalcActivities();
     renderMeetingLinks('calculoi.html', 'meeting-links');

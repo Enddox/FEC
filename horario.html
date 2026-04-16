@@ -41,9 +41,7 @@
       <p class="text-[10px] mb-3 glow-dim" style="color:rgba(0,255,65,0.3)">$ cat /materias/registro.log</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-0.5 mb-5" id="legend"></div>
 
-      <p class="text-[10px] mb-3 glow-dim" style="color:rgba(0,255,65,0.3)">$ stat --format=%s horario</p>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4" id="stats"></div>
-
+      
       <p class="text-[10px] cursor-blink glow-dim" style="color:rgba(0,255,65,0.3)">$ _</p>
 
     </div>
@@ -172,7 +170,7 @@
     const legendData = [
       { n: 'Algoritmos y Programacion I', h: '1.5h' },
       { n: 'Logica Matematica',           h: '4h' },
-      { n: 'Calculo I',                   h: '5.25h' },
+      { n: 'Calculo I',                   h: '4h 45m' },
       { n: 'Subarea de Comunicacion',      h: '1h 40m' },
       { n: 'Orientacion I',               h: '3h 15m' },
       { n: 'PPI',                         h: '3h' }
@@ -188,29 +186,6 @@
         <span class="ml-auto text-[10px] font-mono" style="color:rgba(0,255,65,0.3)">${item.h}</span>
       `;
       legendEl.appendChild(row);
-    });
-
-    const onlineMin = COURSES.filter(c => c.tp === 'online')
-      .reduce((s, c) => s + toMin(c.eh, c.em) - toMin(c.sh, c.sm), 0);
-    const presMin = COURSES.filter(c => c.tp === 'presencial')
-      .reduce((s, c) => s + toMin(c.eh, c.em) - toMin(c.sh, c.sm), 0);
-
-    const statsData = [
-      { l: 'ONLINE',     v: fmtDur(onlineMin) },
-      { l: 'PRESENCIAL', v: fmtDur(presMin) },
-      { l: 'HORAS/SEM',  v: fmtDur(onlineMin + presMin) },
-      { l: 'MATERIAS',   v: new Set(COURSES.map(c => c.n)).size }
-    ];
-
-    const statsEl = document.getElementById('stats');
-    statsData.forEach(s => {
-      const card = document.createElement('div');
-      card.className = 'flex items-center gap-2 px-3 py-2 rounded border border-[rgba(0,255,65,0.1)] glow-box bg-[rgba(0,255,65,0.015)]';
-      card.innerHTML = `
-        <span class="text-[9px] tracking-wider glow-dim" style="color:rgba(0,255,65,0.4)">${s.l}</span>
-        <span class="ml-auto text-xs font-bold glow">${s.v}</span>
-      `;
-      statsEl.appendChild(card);
     });
   </script>
 </body>

@@ -99,15 +99,15 @@ window.FEC_DATA = {
     }
   ],
   schedule: [
-    { d: 0, sh: 14, sm: 45, eh: 16, em: 45, ck: 'calc', tp: 'online' },
+    { d: 0, sh: 16, sm: 0, eh: 17, em: 30, ck: 'calc', tp: 'online' },
     { d: 0, sh: 18, sm: 0, eh: 20, em: 0, ck: 'comu', tp: 'online' },
-    { d: 1, sh: 9, sm: 0, eh: 11, em: 0, ck: 'logi', tp: 'online' },
+    { d: 1, sh: 9, sm: 45, eh: 12, em: 0, ck: 'logi', tp: 'online' },
     { d: 2, sh: 8, sm: 0, eh: 9, em: 30, ck: 'algo', tp: 'presencial' },
-    { d: 2, sh: 9, sm: 30, eh: 11, em: 0, ck: 'logi', tp: 'online' },
-    { d: 2, sh: 14, sm: 45, eh: 16, em: 45, ck: 'calc', tp: 'online' },
+    { d: 2, sh: 9, sm: 45, eh: 12, em: 0, ck: 'logi', tp: 'online' },
+    { d: 2, sh: 16, sm: 0, eh: 17, em: 30, ck: 'calc', tp: 'online' },
     { d: 3, sh: 8, sm: 0, eh: 11, em: 0, ck: 'ppi', tp: 'online' },
     { d: 4, sh: 9, sm: 0, eh: 12, em: 15, ck: 'orie', tp: 'online' },
-    { d: 4, sh: 14, sm: 0, eh: 16, em: 45, ck: 'calc', tp: 'online' }
+    { d: 4, sh: 16, sm: 0, eh: 17, em: 30, ck: 'calc', tp: 'online' }
   ],
   professors: [
     { name: 'Betsi De Pascal', course: 'Cálculo I', email: 'betsi.depascal@universidad.edu' },

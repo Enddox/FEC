@@ -59,7 +59,7 @@ window.FEC_DATA = {
       name: 'Algoritmos y Programacion I',
       pageTitle: 'Algoritmos y Programacion I - I-2026',
       modalidad: 'Online',
-      profesor: '',
+      profesor: 'Sigerist Rodríguez',
       classroomCode: 'algo123',
       classroomUrl: 'https://classroom.google.com',
       zoomUrl: 'https://zoom.us/join'
@@ -70,7 +70,7 @@ window.FEC_DATA = {
       name: 'Logica Matematica',
       pageTitle: 'Logica Matematica - I-2026',
       modalidad: 'Online',
-      profesor: '',
+      profesor: 'Haller Bracho',
       classroomCode: 'logi987',
       classroomUrl: 'https://classroom.google.com',
       zoomUrl: 'https://zoom.us/join'
@@ -81,7 +81,7 @@ window.FEC_DATA = {
       name: 'Orientacion I',
       pageTitle: 'Orientacion I - I-2026',
       modalidad: 'Online',
-      profesor: '',
+      profesor: 'Julieta Oquendo',
       classroomCode: 'orie456',
       classroomUrl: 'https://classroom.google.com',
       zoomUrl: 'https://zoom.us/join'
@@ -92,7 +92,7 @@ window.FEC_DATA = {
       name: 'PPI',
       pageTitle: 'PPI - I-2026',
       modalidad: 'Online',
-      profesor: '',
+      profesor: 'Carmen Barrera',
       classroomCode: 'ppi321',
       classroomUrl: 'https://classroom.google.com',
       zoomUrl: 'https://zoom.us/join'
@@ -110,8 +110,12 @@ window.FEC_DATA = {
     { d: 4, sh: 16, sm: 0, eh: 17, em: 30, ck: 'calc', tp: 'online' }
   ],
   professors: [
-    { name: 'Betsi De Pascal', course: 'Cálculo I', email: 'betsi.depascal@universidad.edu' },
-    { name: 'Eddymar Matheus', course: 'Comunicación y Lenguaje', email: 'eddymar.matheus@universidad.edu' }
+    { name: 'Betsi De Pascal', course: 'Cálculo I', email: 'correo@mail.com', phone: '+58 412-123-4567' },
+    { name: 'Eddymar Matheus', course: 'Comunicación y Lenguaje', email: 'correo@mail.com', phone: '+58 416-123-4568' },
+    { name: 'Sigerist Rodríguez', course: 'Algoritmos y Programación I', email: 'correo@mail.com', phone: '+58 414-123-4569' },
+    { name: 'Haller Bracho', course: 'Lógica Matemática', email: 'correo@mail.com', phone: '+58 424-123-4570' },
+    { name: 'Julieta Oquendo', course: 'Orientación I', email: 'correo@mail.com', phone: '+58 412-123-4571' },
+    { name: 'Carmen Barrera', course: 'PPI', email: 'correo@mail.com', phone: '+58 426-123-4572' }
   ],
   activities: {
     calc: [
@@ -140,26 +144,33 @@ window.FEC_DATA = {
         assigned: '13 abril 2026',
         due: '19 abril 2026'
       }
+    ],
+    algo: [
+      {
+        type: 'instalacion',
+        title: 'Instalar IDE C++',
+        desc: 'Descargar el IDE C++ y tenerlo listo para la proxima clase. para los que no saben cual descargar aqui les dejo los links, y tambien para el que no tenga pc existe una alternativa para android, pero por favor conseguir una PC-Laptop pronto ya que programar en android es bien molesto.<br><br><strong>Code::Blocks</strong><br><br>Windows 64 bits:<br><a href="https://dappcdn.com/download/devtools/code-blocks?get=codeblocks-25.03mingw-setup.exe" target="_blank" style="color: #06b6d4; transition: all 0.3s ease; display: inline-block;" onmouseover="this.style.color=\'#22c55e\'; this.style.transform=\'scale(1.1)\'" onmouseout="this.style.color=\'#06b6d4\'; this.style.transform=\'scale(1)\'">https://dappcdn.com/download/devtools/code-blocks?get=codeblocks-25.03mingw-setup.exe</a><br><br>Windows 32 bits:<br><a href="https://dappcdn.com/download/devtools/code-blocks?get=codeblocks-25.03mingw-32bit-setup.exe" target="_blank" style="color: #06b6d4; transition: all 0.3s ease; display: inline-block;" onmouseover="this.style.color=\'#22c55e\'; this.style.transform=\'scale(1.1)\'" onmouseout="this.style.color=\'#06b6d4\'; this.style.transform=\'scale(1)\'">https://dappcdn.com/download/devtools/code-blocks?get=codeblocks-25.03mingw-32bit-setup.exe</a><br><br>Android:<br><a href="https://play.google.com/store/apps/details?id=ru.iiec.cxxdroid" target="_blank" style="color: #06b6d4; transition: all 0.3s ease; display: inline-block;" onmouseover="this.style.color=\'#22c55e\'; this.style.transform=\'scale(1.1)\'" onmouseout="this.style.color=\'#06b6d4\'; this.style.transform=\'scale(1)\'">https://play.google.com/store/apps/details?id=ru.iiec.cxxdroid</a><br><br>MacOS 11.7 o superior:<br><a href="https://dappcdn.com/download/devtools/code-blocks?get=CodeBlocks-25.03_macOS-11.7_x64-wx3.2.6.dmg" target="_blank" style="color: #06b6d4; transition: all 0.3s ease; display: inline-block;" onmouseover="this.style.color=\'#22c55e\'; this.style.transform=\'scale(1.1)\'" onmouseout="this.style.color=\'#06b6d4\'; this.style.transform=\'scale(1)\'">https://dappcdn.com/download/devtools/code-blocks?get=CodeBlocks-25.03_macOS-11.7_x64-wx3.2.6.dmg</a>',
+        assigned: '15 abril 2026'
+      }
+    ],
+    orie: [
+      {
+        type: 'investigacion',
+        title: 'Investigación sobre LUZ y FEC',
+        desc: 'Para su clase de la próxima semana deberán investigar los siguientes puntos: <span style="color: #0891b2; text-shadow: 0 0 10px rgba(8, 145, 178, 0.5);">- Historia de la Universidad del Zulia</span> <span style="color: #0891b2; text-shadow: 0 0 10px rgba(8, 145, 178, 0.5);">- Autoridades actuales de LUZ</span> <span style="color: #0891b2; text-shadow: 0 0 10px rgba(8, 145, 178, 0.5);">- Historia de la Facultad Experimental de Ciencias</span> <span style="color: #0891b2; text-shadow: 0 0 10px rgba(8, 145, 178, 0.5);">- Autoridades actuales de FEC</span> <span style="color: #0891b2; text-shadow: 0 0 10px rgba(8, 145, 178, 0.5);">- Deberes y derechos del estudiante universitario</span> <span style="color: #0891b2; text-shadow: 0 0 10px rgba(8, 145, 178, 0.5);">- Reglamento de evaluación y rendimiento estudiantil de LUZ</span> <span style="color: #0891b2; text-shadow: 0 0 10px rgba(8, 145, 178, 0.5);">- Premios y reconocimientos de la Secretaria de LUZ (para estudiantes)</span> <span style="color: #0891b2; text-shadow: 0 0 10px rgba(8, 145, 178, 0.5);">- Servicios de DIDSE</span>. En la página web de la universidad pueden encontrar toda la información, no es necesario que lleven ningún material impreso, solo investigar y leer, quienes lo deseen pueden llevar sus apuntes en sus cuadernos.',
+        assigned: '15 abril 2026',
+        due: '24 abril 2026'
+      }
     ]
   },
   news: [
     {
       tag: 'comunicado',
-      content: 'La docente Eddymar Matheus informa que la primera clase de Comunicación y Lenguaje será hoy de 18:00 a 20:00, dictada por el Grupo de WhatsApp.',
-      date: '13 abril 2026 — 14:54'
-    },
-    {
-      tag: 'comunicado',
-      content: 'Atención los estudiantes de la sección 2 del primer semestre: la materia Algoritmos y Programación I se dará de manera online el día miércoles de 8:00AM a 9:30AM. Además, la materia de la Subárea de Comunicación y Lenguaje del día lunes, que es a distancia, se dará de 6:00PM a 7:30PM.',
-      date: '13 abril 2026 — 13:58'
-    },
-    {
-      tag: 'aviso',
-      content: 'La clase del día de hoy de Calculo I será suspendida.',
-      date: '13 abril 2026 — 13:46'
+      content: 'Clases de PPI hoy 16 de abril serán a las 8:00 PM.',
+      date: '16 abril 2026 - 11:41'
     }
-  ]
-};
+  ],
+  };
 
 window.FEC_GET_COURSE_BY_CK = function (ck) {
   return window.FEC_DATA.courses.find((course) => course.ck === ck);

@@ -69,33 +69,6 @@
                 <div class="info-value">${course.profesor || 'Por asignar'}</div>
               </div>
             </div>
-            <div class="section-label glow-dim">[ Google Classroom ]</div>
-            <div class="info-card glow-box mb-5">
-              <div class="info-label">Codigo de acceso</div>
-              <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">${course.classroomCode}</div>
-              <div class="flex items-center gap-2 mt-3">
-                <a href="${course.classroomUrl}" target="_blank" class="link-btn link-classroom">
-                  Abrir Classroom
-                </a>
-                <button class="copy-btn" onclick="copyCode('${course.classroomCode}', this)">
-                  Copiar
-                </button>
-              </div>
-            </div>
-            <div class="section-label glow-dim">[ Zoom ]</div>
-            <div class="info-card glow-box mb-5">
-              <div class="info-label">ID de la sala</div>
-              <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.1em">${course.zoomId}</div>
-              <div class="info-label mt-3">Codigo de acceso</div>
-              <div class="info-value mono glow" style="font-size:16px;letter-spacing:0.15em">${course.zoomPass}</div>
-              <div class="flex items-center gap-2 mt-3">
-                <a href="${course.zoomUrl}" target="_blank" class="link-btn link-zoom">
-                  Unirse a Zoom
-                </a>
-                <button class="copy-btn" onclick="copyCode('${course.zoomId}', this)">ID</button>
-                <button class="copy-btn" onclick="copyCode('${course.zoomPass}', this)">Clave</button>
-              </div>
-            </div>
             ${course.meetingLinks && course.meetingLinks.length ? `
             <div class="section-label glow-dim">[ Enlaces de reunión ]</div>
             <div class="info-card glow-box mb-5">

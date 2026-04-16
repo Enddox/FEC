@@ -165,9 +165,9 @@ window.FEC_DATA = {
   },
   news: [
     {
-      tag: 'comunicado',
-      content: 'Clases de PPI hoy 16 de abril serán a las 8:00 PM.',
-      date: '16 abril 2026 - 11:41'
+      tag: 'informacion',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      date: '16 abril 2026 - 13:36'
     }
   ],
   };

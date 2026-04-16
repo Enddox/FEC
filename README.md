@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 # FEC
 
 ## Descripción
@@ -198,3 +200,4 @@ git push
 - `data/site-data.js` es el modelo central.
 - Las páginas HTML son vistas que consumen ese modelo.
 - No dupliques datos entre archivos HTML y `data/site-data.js`.
+>>>>>>> ce239526d0dd52d0df10390a41b2c16f4b52ad49
